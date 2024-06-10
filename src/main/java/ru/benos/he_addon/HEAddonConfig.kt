@@ -1,5 +1,3 @@
 package ru.benos.he_addon
 
-object HEAddonConfig {
-  // No config :D
-}
+object HEAddonConfig {} // Not configs :D

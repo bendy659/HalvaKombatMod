@@ -32,7 +32,12 @@ object Config : HollowScreen() {
 
   val confBool = LinkedHashMap<String, Boolean>()
 
-  var openOldGUI = ImBoolean().apply { set(Gson().fromJson(FileReader(fileConfig), JsonObject::class.java).get("openOldGUI").asBoolean) }
+  var openOldGUI = ImBoolean().apply {
+    val check0 = getConfig("openOldGUI")
+
+    if(check0 is Boolean) set(check0)
+    else set(false)
+  }
 
   override fun init() {
     if(!fileConfig.exists()) generateConfig()
@@ -54,10 +59,29 @@ object Config : HollowScreen() {
       is String -> jsonObj.addProperty(config, value)
       is Int -> jsonObj.addProperty(config, value)
       is Boolean -> jsonObj.addProperty(config, value)
-      else -> throw IllegalArgumentException("Unknown value type: ${value.javaClass}")
+      else -> throw IllegalArgumentException("Unknown value type: ${value.javaClass.name}")
     }
+    val result = GsonBuilder().setPrettyPrinting().create().toJson(jsonObj)
+    FileWriter(fileConfig).use { writer -> writer.write(result) }
+  }
+  fun getConfig(config: String): Any? {
+    val jsonElement = Gson().fromJson(FileReader(fileConfig), JsonObject::class.java).get(config)
 
-    FileWriter(fileConfig).use { writer -> writer.write(jsonObj.toString()) }
+    return when {
+        jsonElement.isJsonPrimitive -> {
+            val jsonPrimitive = jsonElement.asJsonPrimitive
+            when {
+                jsonPrimitive.isBoolean -> jsonPrimitive.asBoolean
+                jsonPrimitive.isString -> jsonPrimitive.asString
+                jsonPrimitive.isNumber -> jsonPrimitive.asNumber
+                else -> null
+            }
+        }
+        jsonElement.isJsonObject -> jsonElement.asJsonObject
+        jsonElement.isJsonArray -> jsonElement.asJsonArray
+        jsonElement.isJsonNull -> null
+        else -> null
+    }
   }
 
   override fun render(pPoseStack: PoseStack, pMouseX: Int, pMouseY: Int, pPartialTick: Float) {
@@ -76,7 +100,7 @@ object Config : HollowScreen() {
 
           ImGui.newLine()
           if(ImGui.checkbox(" ${lang("gui.config.openOldGUI_desc")}", openOldGUI))
-            updateConfig("openOldGUI", ImBoolean().apply { get() })
+            updateConfig("openOldGUI", openOldGUI.get())
 
           ImGui.newLine()
           ImGui.separator()

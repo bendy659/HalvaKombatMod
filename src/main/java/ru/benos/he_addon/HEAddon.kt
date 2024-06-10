@@ -10,6 +10,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.loading.FMLEnvironment
 import org.slf4j.Logger
 import ru.benos.he_addon.KeyBinds.initKeys
+import ru.benos.he_addon.events.ClientEvents
 
 @Mod(HEAddon.MODID)
 class HEAddon {
@@ -19,6 +20,7 @@ class HEAddon {
 
         if(FMLEnvironment.dist.isClient) {
             forgeBus.register(KeyBinds)
+            forgeBus.register(ClientEvents)
             initKeys()
         }
 
