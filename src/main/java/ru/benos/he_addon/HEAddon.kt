@@ -7,13 +7,21 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
+import net.minecraftforge.fml.loading.FMLEnvironment
 import org.slf4j.Logger
+import ru.benos.he_addon.KeyBinds.initKeys
 
 @Mod(HEAddon.MODID)
 class HEAddon {
     init {
         val forgeBus = MinecraftForge.EVENT_BUS
         forgeBus.addListener(::commonSetup)
+
+        if(FMLEnvironment.dist.isClient) {
+            forgeBus.register(KeyBinds)
+            initKeys()
+        }
+
         forgeBus.register(this)
     }
 
@@ -33,6 +41,6 @@ class HEAddon {
 
     companion object {
         const val MODID: String = "he_addon"
-        private val LOGGER: Logger = LogUtils.getLogger()
+        val LOGGER: Logger = LogUtils.getLogger()
     }
 }

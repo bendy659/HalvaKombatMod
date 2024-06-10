@@ -9,6 +9,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.locale.Language
 import net.minecraft.sounds.SoundSource
+import ru.benos.he_addon.HEAddon.Companion.MODID
 import ru.hollowhorizon.hc.client.imgui.ImguiHandler
 import ru.hollowhorizon.hc.client.utils.rl
 import ru.hollowhorizon.hc.client.utils.toTexture
@@ -125,6 +126,6 @@ object HelperPack {
    * Helper translation
    */
   public fun lang(translationID: String = "empty"): String {
-    return Language.getInstance().getOrDefault("hollowengine." + translationID)
+    return Language.getInstance().getOrDefault("$MODID." + translationID)
   }
 }
