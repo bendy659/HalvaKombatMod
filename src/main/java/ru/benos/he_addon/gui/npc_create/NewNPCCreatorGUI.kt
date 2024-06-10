@@ -35,10 +35,7 @@ import java.util.HashMap
 /*
  * New GUI crated for HollowEngine by: _BENDY659_ | RU.
  * All textures drawing by: _BENDY659_ | RU.
- *
- * HollowHorizon! Please refine ths GUI for full used.
 */
-
 class NewNPCCreatorGUI(val npc: NPCEntity, private val npcID: Int, var isEditor: Boolean = false): HollowScreen() {
 
   // NPC Data values | Если что-то не правильно (есть точно) измени

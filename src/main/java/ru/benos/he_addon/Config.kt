@@ -1,5 +1,3 @@
 package ru.benos.he_addon
 
-object Config {
-
-}
+object Config {} // No config :D
