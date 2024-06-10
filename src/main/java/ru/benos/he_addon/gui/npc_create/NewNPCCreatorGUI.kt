@@ -3,6 +3,7 @@ package ru.benos.he_addon.gui.npc_create
 import ru.hollowhorizon.hollowengine.common.entities.NPCEntity
 import com.mojang.blaze3d.vertex.PoseStack
 import imgui.ImGui
+import imgui.flag.ImGuiButtonFlags
 import imgui.flag.ImGuiWindowFlags
 import imgui.type.ImBoolean
 import imgui.type.ImFloat
@@ -12,7 +13,9 @@ import kotlinx.serialization.Serializable
 import net.minecraft.client.Minecraft
 import net.minecraft.world.entity.player.Player
 import org.lwjgl.glfw.GLFW
-import ru.benos.he_addon.gui.npc_create.ColorCustomizationGUI.loadTheme
+import ru.benos.he_addon.gui.themes.ThemeEditor
+import ru.benos.he_addon.gui.themes.ThemeEditor.loadTheme
+import ru.benos.he_addon.gui.themes.ThemeSelect
 import ru.benos.he_addon.utils.HelperPack
 import ru.hollowhorizon.hc.client.handlers.TickHandler
 import ru.hollowhorizon.hc.client.imgui.ImGuiMethods
@@ -76,11 +79,9 @@ class NewNPCCreatorGUI(val npc: NPCEntity, private val npcID: Int, var isEditor:
   private var tabType = ImInt()
 
   // Theme set
-  val themeSelect = ColorCustomizationGUI.getSelectTheme()
-  val themeData = loadTheme(themeSelect)
-
-  val bg0 = if(themeData[0].isEmpty()) floatArrayOf(1f, 1f, 1f, 1f) else themeData[0]
-  val bg1 = if(themeData[1].isEmpty()) floatArrayOf(1f, 1f, 1f, 1f) else themeData[1]
+  val themeSelect = ThemeSelect.getSelectTheme()
+  val bg0 = loadTheme(themeSelect, "bg0")
+  val bg1 = loadTheme(themeSelect, "bg1")
 
   @OptIn(ExperimentalStdlibApi::class)
   override fun render(pPoseStack: PoseStack, pMouseX: Int, pMouseY: Int, pPartialTick: Float) {
@@ -127,8 +128,6 @@ class NewNPCCreatorGUI(val npc: NPCEntity, private val npcID: Int, var isEditor:
 
       ImGui.setCursorPos(80f, 120f)
       HelperPack.separator(ImGui.getWindowWidth() / 1.5f)
-
-      if(GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_F12) == 301) ColorCustomizationGUI.open()
 
       // Tabs
       val tab0 = 95f

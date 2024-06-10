@@ -19,14 +19,6 @@ import ru.hollowhorizon.hollowengine.common.files.DirectoryManager.HOLLOW_ENGINE
 import java.io.File
 
 class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
-  private val file = File(HOLLOW_ENGINE.path, "oldGUI.open")
-
-    private var isOldGUI = ImBoolean().apply {
-      set(
-        if(!file.exists()) false
-        else true
-      )
-    }
 
   override fun render(pPoseStack: PoseStack, pMouseX: Int, pMouseY: Int, pPartialTick: Float) {
     ImguiHandler.drawFrame {
@@ -36,11 +28,7 @@ class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
 
       centredWindow {
         if (imageButton("wrench", HelperPack.lang("gui.npc_tool.npc_setting"))) {
-          if(!isOldGUI.get()) NewNPCCreatorGUI(npc, npc.id, true).open()
-          else NPCCreatorGui(npc, npc.id).open()
-
-          if(isOldGUI.get()) file.createNewFile()
-          else file.delete()
+          NewNPCCreatorGUI(npc, npc.id, true).open()
         }
         sameLine()
 
@@ -51,8 +39,6 @@ class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
 
         imageButton("pose", HelperPack.lang("gui.npc_tool.npc_poses"))
         ImGui.newLine()
-
-        ImGui.checkbox(" ${HelperPack.lang("gui.npc_tool.open_old_gui")}", isOldGUI)
       }
     }
   }
