@@ -21,8 +21,13 @@ class HEAddon {
         if(FMLEnvironment.dist.isClient) {
             forgeBus.register(KeyBinds)
             forgeBus.register(ClientEvents)
+
+            forgeBus.addListener(ClientEvents::onGuiOpen)
+            forgeBus.addListener(::onClientSetup)
+
             initKeys()
         }
+        forgeBus.addListener(::commonSetup)
 
         forgeBus.register(this)
     }

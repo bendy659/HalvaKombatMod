@@ -6,6 +6,7 @@ import net.minecraftforge.client.event.ScreenEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
+import ru.hollowhorizon.hollowengine.client.gui.NPCToolGui
 
 @EventBusSubscriber
 object ClientEvents {
@@ -14,6 +15,7 @@ object ClientEvents {
   /*
    * 0 = Not opened. default
    * 1 - Control screen
+   * 2 - NPC tool menu
   */
 
   @SubscribeEvent
@@ -21,11 +23,10 @@ object ClientEvents {
     val screen = e.screen
 
     if(screen is ControlsScreen) screenOpenType = 1
+    else if(screen is NPCToolGui) screenOpenType = 2
     else screenOpenType = 0
   }
 
-  fun isControlScreenOpen(): Boolean {
-    if(screenOpenType == 1) return true
-    else return false
-  }
+  fun isControlScreenOpen() = screenOpenType == 1
+  fun isNpcToolGuiScreenOpen() = screenOpenType == 2
 }
