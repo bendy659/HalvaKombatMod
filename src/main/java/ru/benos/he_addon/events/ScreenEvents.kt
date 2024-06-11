@@ -24,15 +24,6 @@ object ScreenEvents {
 
     if(screen is ControlsScreen) screenOpenType = 1
     else screenOpenType = 0
-
-    if(screen is NPCToolGui) {
-      val isOldMenu = getConfig("openOldMenu")
-
-      if(isOldMenu is Boolean && isOldMenu) {
-        val npcData = (screen as NPCToolGui).npc
-        NPCToolGUI(npcData).open()
-      }
-    }
   }
 
   fun isControlScreenOpen(): Boolean {
@@ -40,5 +31,19 @@ object ScreenEvents {
       HEAddon.LOGGER.debug("Control screen is open")
       return true
     } else return false
+  }
+
+  @SubscribeEvent
+  fun onNpcToolGuiOpen(e: ScreenEvent.Opening) {
+    val screen = e.screen
+
+    if(screen is NPCToolGui) {
+      val isOldMenu = getConfig("openOldMenu")
+
+      if(isOldMenu is Boolean && isOldMenu) {
+        val npcData = screen.npc
+        NPCToolGUI(npcData).open()
+      }
+    }
   }
 }

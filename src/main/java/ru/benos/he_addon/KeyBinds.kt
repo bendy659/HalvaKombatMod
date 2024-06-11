@@ -23,8 +23,6 @@ object KeyBinds {
     }
   }
 
-  fun init() {}
-
   @SubscribeEvent
   fun onKeyPressed(event: InputEvent.Key) {
     val key = InputConstants.getKey(

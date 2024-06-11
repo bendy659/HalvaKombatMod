@@ -29,22 +29,19 @@ import java.io.FileWriter
 object Config : HollowScreen() {
   val CONFIGDIR = FMLPaths.GAMEDIR.get().resolve("config").toFile()
   val fileConfig = File(CONFIGDIR, "$MODID.json")
-
   val confBool = LinkedHashMap<String, Boolean>()
-
   var openOldGUI = ImBoolean().apply {
-    val check0 = getConfig("openOldGUI")
-
-    if(check0 is Boolean) set(check0)
-    else set(false)
-  }
-
-  override fun init() {
     if(!fileConfig.exists()) generateConfig()
-    else HEAddon.LOGGER.debug("Config file '${fileConfig.name}' found.")
+    else {
+      val check0 = getConfig("openOldGUI")
+      if (check0 is Boolean) set(check0)
+      else set(false)
+    }
   }
 
-  private fun generateConfig() {
+  public override fun init() {}
+
+  fun generateConfig() {
     val gsonBuild = GsonBuilder().setPrettyPrinting().create()
     confBool["openOldMenu"] = false
 
@@ -52,7 +49,8 @@ object Config : HollowScreen() {
     FileWriter(fileConfig).use { writed -> writed.write(result) }
     HEAddon.LOGGER.warn("Config file not found. Generated now!")
   }
-  private fun updateConfig(config: String, value: Any) {
+
+  private fun setConfig(config: String, value: Any) {
     val jsonObj = JsonParser.parseReader(FileReader(fileConfig)).asJsonObject
 
     when(value) {
@@ -68,19 +66,19 @@ object Config : HollowScreen() {
     val jsonElement = Gson().fromJson(FileReader(fileConfig), JsonObject::class.java).get(config)
 
     return when {
-        jsonElement.isJsonPrimitive -> {
-            val jsonPrimitive = jsonElement.asJsonPrimitive
-            when {
-                jsonPrimitive.isBoolean -> jsonPrimitive.asBoolean
-                jsonPrimitive.isString -> jsonPrimitive.asString
-                jsonPrimitive.isNumber -> jsonPrimitive.asNumber
-                else -> null
-            }
+      jsonElement.isJsonPrimitive -> {
+        val jsonPrimitive = jsonElement.asJsonPrimitive
+        when {
+          jsonPrimitive.isBoolean -> jsonPrimitive.asBoolean
+          jsonPrimitive.isString -> jsonPrimitive.asString
+          jsonPrimitive.isNumber -> jsonPrimitive.asNumber
+          else -> null
         }
-        jsonElement.isJsonObject -> jsonElement.asJsonObject
-        jsonElement.isJsonArray -> jsonElement.asJsonArray
-        jsonElement.isJsonNull -> null
-        else -> null
+      }
+      jsonElement.isJsonObject -> jsonElement.asJsonObject
+      jsonElement.isJsonArray -> jsonElement.asJsonArray
+      jsonElement.isJsonNull -> null
+      else -> null
     }
   }
 
@@ -100,7 +98,7 @@ object Config : HollowScreen() {
 
           ImGui.newLine()
           if(checkbox(" ${lang("gui.config.openOldMenu")}", lang("gui.config.openOldMenu_desc"), openOldGUI))
-            updateConfig("openOldGUI", openOldGUI.get())
+            setConfig("openOldMenu", openOldGUI.get())
 
           ImGui.newLine()
           ImGui.separator()
