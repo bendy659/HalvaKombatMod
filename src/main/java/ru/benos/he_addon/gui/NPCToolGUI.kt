@@ -2,9 +2,9 @@ package ru.benos.he_addon.gui
 
 import com.mojang.blaze3d.vertex.PoseStack
 import imgui.ImGui
-import imgui.type.ImBoolean
 import net.minecraft.client.Minecraft
-import ru.benos.he_addon.gui.npc_create.NewNPCCreatorGUI
+import ru.benos.he_addon.gui.Config.getConfig
+import ru.benos.he_addon.gui.npc_create.HEAddon_NPCCreatorGUI
 import ru.benos.he_addon.utils.HelperPack
 import ru.hollowhorizon.hc.client.imgui.ImGuiMethods.centredWindow
 import ru.hollowhorizon.hc.client.imgui.ImguiHandler
@@ -15,8 +15,6 @@ import ru.hollowhorizon.hc.client.utils.toTexture
 import ru.hollowhorizon.hollowengine.client.gui.NPCCreatorGui
 import ru.hollowhorizon.hollowengine.client.gui.npcs.ScriptNodeEditor
 import ru.hollowhorizon.hollowengine.common.entities.NPCEntity
-import ru.hollowhorizon.hollowengine.common.files.DirectoryManager.HOLLOW_ENGINE
-import java.io.File
 
 class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
 
@@ -28,7 +26,9 @@ class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
 
       centredWindow {
         if (imageButton("wrench", HelperPack.lang("gui.npc_tool.npc_setting"))) {
-          NewNPCCreatorGUI(npc, npc.id, true).open()
+          val oldMenuOpen = getConfig("openOldMenu")
+          if(oldMenuOpen is Boolean && oldMenuOpen) HEAddon_NPCCreatorGUI(npc, npc.id, true).open()
+          else NPCCreatorGui(npc, npc.id).open()
         }
         sameLine()
 

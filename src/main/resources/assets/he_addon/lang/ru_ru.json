@@ -7,7 +7,8 @@
 
   "config_gui": "Config 2.0",
   "he_addon.gui.title": "HollowEngine | ADDON - Конфиг",
-  "he_addon.gui.config.openOldGUI_desc": "Открывать старое меню 'NPC Creator'",
+  "he_addon.gui.config.openOldMenu": "Открывать старое меню 'NPC Creator'",
+  "he_addon.gui.config.openOldMenu_desc": "Вместо нового дизайнерского меню из этого мода, будет открываться классическое из 'HollowEngine'",
 
   "npc_create_gui_title": "NPC Create GUI",
   "he_addon.gui.npc_create.title_create": "Создать НИПа",

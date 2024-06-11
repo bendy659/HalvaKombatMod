@@ -4,7 +4,4 @@ import org.spongepowered.asm.mixin.Mixin;
 import ru.hollowhorizon.hollowengine.common.items.NpcTool;
 
 @Mixin(NpcTool.class)
-class NPCToolMixin {
-
-
-}
+public class NpcToolMixin {} // No mixin D:

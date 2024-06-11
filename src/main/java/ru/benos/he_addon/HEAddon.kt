@@ -11,6 +11,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment
 import org.slf4j.Logger
 import ru.benos.he_addon.KeyBinds.initKeys
 import ru.benos.he_addon.events.ClientEvents
+import ru.benos.he_addon.events.ScreenEvents
 
 @Mod(HEAddon.MODID)
 class HEAddon {
@@ -21,8 +22,9 @@ class HEAddon {
         if(FMLEnvironment.dist.isClient) {
             forgeBus.register(KeyBinds)
             forgeBus.register(ClientEvents)
+            forgeBus.register(ScreenEvents)
 
-            forgeBus.addListener(ClientEvents::onGuiOpen)
+            forgeBus.addListener(ScreenEvents::onGuiOpen)
             forgeBus.addListener(::onClientSetup)
 
             initKeys()

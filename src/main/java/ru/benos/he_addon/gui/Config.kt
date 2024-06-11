@@ -46,7 +46,7 @@ object Config : HollowScreen() {
 
   private fun generateConfig() {
     val gsonBuild = GsonBuilder().setPrettyPrinting().create()
-    confBool["openOldGUI"] = false
+    confBool["openOldMenu"] = false
 
     val result = gsonBuild.toJson(confBool)
     FileWriter(fileConfig).use { writed -> writed.write(result) }
@@ -99,7 +99,7 @@ object Config : HollowScreen() {
         ImGui.beginChild("Main window", 1024f, 640f)
 
           ImGui.newLine()
-          if(ImGui.checkbox(" ${lang("gui.config.openOldGUI_desc")}", openOldGUI))
+          if(checkbox(" ${lang("gui.config.openOldMenu")}", lang("gui.config.openOldMenu_desc"), openOldGUI))
             updateConfig("openOldGUI", openOldGUI.get())
 
           ImGui.newLine()
@@ -110,5 +110,11 @@ object Config : HollowScreen() {
         ImGui.popStyleVar()
       }
     }
+  }
+
+  private fun checkbox(text: String, desc: String, checker: ImBoolean): Boolean {
+    val isCHeck = ImGui.checkbox(text, checker)
+    if(ImGui.isItemHovered()) ImGui.setTooltip(desc)
+    return isCHeck
   }
 }

@@ -3,7 +3,6 @@ package ru.benos.he_addon.gui.npc_create
 import ru.hollowhorizon.hollowengine.common.entities.NPCEntity
 import com.mojang.blaze3d.vertex.PoseStack
 import imgui.ImGui
-import imgui.flag.ImGuiButtonFlags
 import imgui.flag.ImGuiWindowFlags
 import imgui.type.ImBoolean
 import imgui.type.ImFloat
@@ -11,9 +10,8 @@ import imgui.type.ImInt
 import imgui.type.ImString
 import kotlinx.serialization.Serializable
 import net.minecraft.client.Minecraft
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
-import org.lwjgl.glfw.GLFW
-import ru.benos.he_addon.gui.themes.ThemeEditor
 import ru.benos.he_addon.gui.themes.ThemeEditor.loadTheme
 import ru.benos.he_addon.gui.themes.ThemeSelect
 import ru.benos.he_addon.utils.HelperPack
@@ -36,13 +34,13 @@ import java.util.HashMap
  * New GUI crated for HollowEngine by: _BENDY659_ | RU.
  * All textures drawing by: _BENDY659_ | RU.
 */
-class NewNPCCreatorGUI(val npc: NPCEntity, private val npcID: Int, var isEditor: Boolean = false): HollowScreen() {
+class HEAddon_NPCCreatorGUI(val npc: NPCEntity, private val npcID: Int, var isEditor: Boolean = false): HollowScreen() {
 
   // NPC Data values | Если что-то не правильно (есть точно) измени
   private val npcName = ImString().apply {
     if (npc.hasCustomName()) set(npc.customName?.string ?: "")
     else set(
-      String(NewNPCCreatorGUI::class.java.getResourceAsStream("/internal/npc.names")!!.readAllBytes()).split(
+      String(HEAddon_NPCCreatorGUI::class.java.getResourceAsStream("/internal/npc.names")!!.readAllBytes()).split(
         "\r\n",
         "\n"
       ).random()

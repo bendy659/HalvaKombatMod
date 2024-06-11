@@ -2,13 +2,12 @@ package ru.benos.he_addon
 
 import com.mojang.blaze3d.platform.InputConstants
 import net.minecraft.client.KeyMapping
-import net.minecraft.client.Minecraft
 import net.minecraftforge.client.event.InputEvent
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import org.lwjgl.glfw.GLFW
 import ru.benos.he_addon.HEAddon.Companion.MODID
-import ru.benos.he_addon.events.ClientEvents.isControlScreenOpen
+import ru.benos.he_addon.events.ScreenEvents.isControlScreenOpen
 import ru.benos.he_addon.gui.Config
 import ru.hollowhorizon.hc.client.utils.open
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -24,6 +23,8 @@ object KeyBinds {
     }
   }
 
+  fun init() {}
+
   @SubscribeEvent
   fun onKeyPressed(event: InputEvent.Key) {
     val key = InputConstants.getKey(
@@ -31,7 +32,6 @@ object KeyBinds {
       event.scanCode
     )
 
-    if(OPEN_CONFIG.isActiveAndMatches(key))
-      if(!isControlScreenOpen()) Config.open()
+    if(OPEN_CONFIG.isActiveAndMatches(key) && !isControlScreenOpen()) Config.open()
   }
 }
