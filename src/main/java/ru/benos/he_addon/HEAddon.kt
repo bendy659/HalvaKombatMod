@@ -41,6 +41,7 @@ class HEAddon {
 
             forgeBus.addListener(ScreenEvents::onGuiOpen)
             forgeBus.addListener(ScreenEvents::onNpcToolGuiOpen)
+            forgeBus.addListener(ScreenEvents::onNPCCreatorGuiOpen)
 
             initKeys()
 

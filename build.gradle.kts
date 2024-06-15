@@ -104,6 +104,7 @@ dependencies {
   annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
   implementation("thedarkcolour:kotlinforforge:3.12.0")
+  //implementation(fg.deobf("thedarkcolour:kotlinforforge:3.12.0-all"))
   implementation(fg.deobf("ru.hollowhorizon:hollowengine:$minecraft_version-1.6.0aaa"))
   implementation(fg.deobf("ru.hollowhorizon:hc:$minecraft_version-1.6.2"))
   implementation(fg.deobf("ru.hollowhorizon:kotlinscript:1.3"))

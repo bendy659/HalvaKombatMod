@@ -2,53 +2,67 @@ package ru.benos.he_addon.gui
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.mojang.blaze3d.vertex.PoseStack
 import imgui.ImGui
-import imgui.ImVec2
 import imgui.flag.ImGuiStyleVar
 import imgui.flag.ImGuiWindowFlags
 import imgui.type.ImBoolean
 import net.minecraftforge.fml.loading.FMLPaths
-import org.jetbrains.kotlin.backend.jvm.intrinsics.IrIllegalArgumentException
 import ru.benos.he_addon.HEAddon
 import ru.benos.he_addon.HEAddon.Companion.MODID
-import ru.benos.he_addon.utils.HelperPack
 import ru.benos.he_addon.utils.HelperPack.lang
 import ru.hollowhorizon.hc.client.imgui.ImGuiMethods.window
 import ru.hollowhorizon.hc.client.imgui.ImguiHandler
 import ru.hollowhorizon.hc.client.screens.HollowScreen
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.FileReader
 import java.io.FileWriter
+import java.time.Instant
 
 // Зачем нам обычный конфиг, когда можно создать свой)))
 object Config : HollowScreen() {
   val CONFIGDIR = FMLPaths.GAMEDIR.get().resolve("config").toFile()
   val fileConfig = File(CONFIGDIR, "$MODID.json")
-  val confBool = LinkedHashMap<String, Boolean>()
-  var openOldGUI = ImBoolean().apply {
-    if(!fileConfig.exists()) generateConfig()
-    else {
-      val check0 = getConfig("openOldGUI")
-      if (check0 is Boolean) set(check0)
-      else set(false)
-    }
+  var openOldMenu = ImBoolean().apply {
+    val check = getConfig("openOldGUI")
+
+    if (check is Boolean) set(check)
+    else set(false)
+  }
+  var debugMode = ImBoolean().apply {
+    val check = getConfig("debugMode")
+
+    if(check is Boolean) set(check)
+    else set(false)
+  }
+  var npcToolMenu_newIcons = ImBoolean().apply {
+    val check = getConfig("npcToolMenu_newIcons")
+
+    if(check is Boolean) set(check)
+    else set(false)
   }
 
-  public override fun init() {}
+  public override fun init() {
+    if(!fileConfig.exists()) generateConfig()
+  }
 
-  fun generateConfig() {
+  private fun generateConfig() {
+    val confBool = LinkedHashMap<String, Boolean>()
+
     val gsonBuild = GsonBuilder().setPrettyPrinting().create()
+    confBool["debugMode"] = false
     confBool["openOldMenu"] = false
+    confBool["npcToolMenu_newIcons"] = false
 
     val result = gsonBuild.toJson(confBool)
     FileWriter(fileConfig).use { writed -> writed.write(result) }
     HEAddon.LOGGER.warn("Config file not found. Generated now!")
   }
+
+  private var buttonReGerConfigTrigger = false;
+  private var buttonReGenConfigDuration: Instant? = null
 
   private fun setConfig(config: String, value: Any) {
     val jsonObj = JsonParser.parseReader(FileReader(fileConfig)).asJsonObject
@@ -65,9 +79,11 @@ object Config : HollowScreen() {
   fun getConfig(config: String): Any? {
     val jsonElement = Gson().fromJson(FileReader(fileConfig), JsonObject::class.java).get(config)
 
-    return when {
+    if(jsonElement == null) return null
+    else return when {
       jsonElement.isJsonPrimitive -> {
         val jsonPrimitive = jsonElement.asJsonPrimitive
+
         when {
           jsonPrimitive.isBoolean -> jsonPrimitive.asBoolean
           jsonPrimitive.isString -> jsonPrimitive.asString
@@ -75,9 +91,6 @@ object Config : HollowScreen() {
           else -> null
         }
       }
-      jsonElement.isJsonObject -> jsonElement.asJsonObject
-      jsonElement.isJsonArray -> jsonElement.asJsonArray
-      jsonElement.isJsonNull -> null
       else -> null
     }
   }
@@ -86,7 +99,7 @@ object Config : HollowScreen() {
     super.render(pPoseStack, pMouseX, pMouseY, pPartialTick)
 
     ImguiHandler.drawFrame {
-      window(lang("gui.title"), ImGuiWindowFlags.NoResize or ImGuiWindowFlags.NoMove or ImGuiWindowFlags.NoCollapse) {
+      window(lang("gui.config.title"), ImGuiWindowFlags.NoResize or ImGuiWindowFlags.NoMove or ImGuiWindowFlags.NoCollapse) {
         centerWindow()
 
         ImGui.setWindowSize(1280f, 720f)
@@ -94,25 +107,53 @@ object Config : HollowScreen() {
 
         ImGui.pushStyleVar(ImGuiStyleVar.ChildBorderSize, 2f)
         ImGui.setCursorPosX(116f)
-        ImGui.beginChild("Main window", 1024f, 640f)
+        ImGui.beginChild("Main window", 1024f, 580f)
 
           ImGui.newLine()
-          if(checkbox(" ${lang("gui.config.openOldMenu")}", lang("gui.config.openOldMenu_desc"), openOldGUI))
-            setConfig("openOldMenu", openOldGUI.get())
+
+          if( checkbox("debugMode", debugMode) )
+              setConfig("debugMode", debugMode.get())
+
 
           ImGui.newLine()
           ImGui.separator()
           ImGui.newLine()
 
+          if( checkbox("openOldMenu", openOldMenu) )
+            setConfig("openOldMenu", openOldMenu.get())
+
+          ImGui.newLine()
+          ImGui.separator()
+          ImGui.newLine()
+
+          if( checkbox("npcToolMenu_newIcons", npcToolMenu_newIcons) )
+            setConfig("npcToolMenu_newIcons", npcToolMenu_newIcons.get())
+
         ImGui.endChild()
         ImGui.popStyleVar()
+
+        if(debugMode.get())
+          if ( button("regen_config", 35f, 650f) ) generateConfig()
+
+        if( button("close", 1128f, 650f) ) onClose()
       }
     }
   }
 
-  private fun checkbox(text: String, desc: String, checker: ImBoolean): Boolean {
-    val isCHeck = ImGui.checkbox(text, checker)
-    if(ImGui.isItemHovered()) ImGui.setTooltip(desc)
-    return isCHeck
+  private fun checkbox(text: String, valueChange: ImBoolean): Boolean {
+    val isCheck = ImGui.checkbox(
+      " ${lang("gui.config.$text")}",
+      valueChange
+    )
+
+    if(ImGui.isItemHovered()) ImGui.setTooltip(lang("gui.config.${text}_desc"))
+    return isCheck
+  }
+  private fun button(text: String, posX: Float, posY: Float): Boolean {
+    ImGui.setCursorPos(posX, posY)
+    val isClick = ImGui.button(lang("gui.config.button.$text"))
+
+    if(ImGui.isItemHovered()) ImGui.setTooltip(lang("gui.config.button.${text}_desc"))
+    return isClick
   }
 }

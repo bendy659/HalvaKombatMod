@@ -4,9 +4,7 @@
   "package": "ru.benos.he_addon.mixins",
   "compatibilityLevel": "JAVA_17",
   "refmap": "he_addon.refmap.json",
-  "mixins": [
-    "NpcToolMixin"
-  ],
+  "mixins": [],
   "client": [],
   "injectors": {
     "defaultRequire": 1

@@ -103,10 +103,19 @@ object HelperPack {
     return isActive.get()
   }
 
+  /*
+   *
+  */
+  fun showInfo(infoText: String) {
+    ImGui.text("[?]")
+
+    if(ImGui.isItemHovered()) ImGui.setTooltip(infoText)
+  }
+
   /**
    * Sound: *click*
    */
-  private fun clickSound(volume: Float = 0.16f) {
+  fun clickSound(volume: Float = 0.16f) {
     Minecraft.getInstance().soundManager.play(
       SimpleSoundInstance(
         "hc:sfx/choice_button".rl, SoundSource.PLAYERS, volume, 1f, Minecraft.getInstance().player!!.random,

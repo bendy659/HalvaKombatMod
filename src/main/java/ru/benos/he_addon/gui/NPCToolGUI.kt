@@ -4,9 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack
 import imgui.ImGui
 import net.minecraft.client.Minecraft
 import ru.benos.he_addon.gui.Config.getConfig
-import ru.benos.he_addon.gui.npc_create.HEAddon_NPCCreatorGUI
-import ru.benos.he_addon.utils.HelperPack
 import ru.benos.he_addon.utils.HelperPack.lang
+import ru.benos.he_addon.utils.HelperPack.showInfo
 import ru.hollowhorizon.hc.client.imgui.ImGuiMethods.centredWindow
 import ru.hollowhorizon.hc.client.imgui.ImguiHandler
 import ru.hollowhorizon.hc.client.screens.HollowScreen
@@ -26,11 +25,17 @@ class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
       ImGui.setNextWindowSize(window.width * 0.9f, window.height * 0.9f)
 
       centredWindow {
-        if (imageButton("wrench", lang("gui.npc_tool.npc_setting"))) {
+        ImGui.text(lang("gui.npc_tool.title"))
+        ImGui.sameLine()
+        showInfo(lang("gui.npc_tool.show_info"))
+
+        ImGui.separator()
+        ImGui.newLine()
+
+        if (imageButton("wrench", lang("gui.npc_tool.npc_editing"))) {
           val oldMenuOpen = getConfig("openOldMenu")
 
-          if(oldMenuOpen is Boolean)
-            if(!oldMenuOpen) HEAddon_NPCCreatorGUI(npc, npc.id, true).open()
+          if(oldMenuOpen is Boolean && !oldMenuOpen) HEAddon_NPCCreatorGUI(npc, npc.id, true).open()
           else NPCCreatorGui(npc, npc.id).open()
         }
         sameLine()
@@ -46,8 +51,12 @@ class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
     }
   }
 
-  fun imageButton(image: String, desc: String): Boolean {
-    val isClicked = ImGui.imageButton("hollowengine:textures/gui/icons/$image.png".rl.toTexture().id, 256f, 256f)
+  private fun imageButton(icon: String, desc: String): Boolean {
+    val config = getConfig("npcToolMenu_newIcons")
+    val isClicked =
+      if(config is Boolean && !config) ImGui.imageButton("hollowengine:textures/gui/icons/$icon.png".rl.toTexture().id, 256f, 256f)
+      else ImGui.imageButton("he_addon:textures/gui/npc_tool/$icon.png".rl.toTexture().id, 256f, 256f)
+
     if (ImGui.isItemHovered()) ImGui.setTooltip(desc)
     return isClicked
   }

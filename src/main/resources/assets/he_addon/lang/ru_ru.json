@@ -1,16 +1,32 @@
 {
-  "mod_name": "he_addon | ADDON",
+  "mod_name": "HollowEngine | ADDON",
 
-  "he_addon_keybinds": "Keybinds",
+  "he_addon.keybinds": "Keybinds",
   "key.categories.he_addon.keys": "HollowEngine | ADDONS - Клавиши",
   "key.he_addon.open_config": "Открыть конфиг мода",
 
-  "config_gui": "Config 2.0",
-  "he_addon.gui.title": "HollowEngine | ADDON - Конфиг",
-  "he_addon.gui.config.openOldMenu": "Открывать старое меню 'NPC Creator'",
+  "he_addon.gui.config": "Config 2.0",
+  "he_addon.gui.config.title": "HollowEngine | ADDON - Конфиг",
+  "he_addon.gui.config.openOldMenu": "Открывать старое меню 'Редактор НИПа'",
   "he_addon.gui.config.openOldMenu_desc": "Вместо нового дизайнерского меню из этого мода, будет открываться классическое из 'HollowEngine'",
+  "he_addon.gui.config.debugMode": "Включить режим откладки",
+  "he_addon.gui.config.debugMode_desc": "В режиме откладки отображается больше информации",
+  "he_addon.gui.config.npcToolMenu_newIcons": "Новые иконки для кнопок в меню 'Настройка НИПа'",
+  "he_addon.gui.config.npcToolMenu_newIcons_desc": "Заменяет классические иконки из 'HollowEngine' на новые из данного мода",
+  "he_addon.gui.config.button.regen_config": "Перегенерировать файл конфигурации",
+  "he_addon.gui.config.button.regen_config_desc": "Сгенерирует файл конфигурации заново, на случай если появились проблемы с его чтением",
+  "he_addon.gui.config.button.close": "Закрыть",
+  "he_addon.gui.config.button.close_desc": "Закрыть меню конфигурации",
 
-  "npc_create_gui_title": "NPC Create GUI",
+  "he_addon.npc_tool": "NPC Tool menu",
+  "he_addon.gui.npc_tool.show_info": "Наведитесь на элементы чтобы узнать что они делают",
+  "he_addon.gui.npc_tool.title": "Настройка НИПа",
+  "he_addon.gui.npc_tool.npc_editing": "Редактирование",
+  "he_addon.gui.npc_tool.npc_actions": "Действия",
+  "he_addon.gui.npc_tool.npc_poses": "Позинг",
+  "he_addon.gui.npc_tool.close": "Закрыть",
+
+  "he_addon.gui.npc_create": "NPC Create GUI",
   "he_addon.gui.npc_create.title_create": "Создать НИПа",
   "he_addon.gui.npc_create.title.edit": "Редактировать НИПа",
   "he_addon.gui.npc_create.tabs.base": "Базовый",
@@ -39,5 +55,18 @@
   "he_addon.gui.npc_create.data.error": "§c§l[ОШИБКА]§r §4Не удалось создать НИПа§r",
   "he_addon.gui.npc_create.buttons.create": "Создать",
   "he_addon.gui.npc_create.buttons.save": "Сохранить",
-  "he_addon.gui.npc_create.buttons.cancel": "Отмена"
+  "he_addon.gui.npc_create.buttons.cancel": "Отмена",
+
+  "he_addon.gui.theme_select": "Theme selector menu",
+  "he_addon.gui.theme_select.title": "Выбор темы",
+  "he_addon.gui.theme_select.menus": "Меню",
+  "he_addon.gui.theme_select.menus_desc": "Меню, в котором будет установлена тема",
+  "he_addon.gui.theme_select.packs": "Пак текстур",
+  "he_addon.gui.theme_select.packs_desc": "Пак текстур, используемый для темы (для каждого пака потребуется своя под папка с ID меню)",
+  "he_addon.gui.theme_select.colors": "Цвета",
+  "he_addon.gui.theme_select.colors_desc": "Перекрас текстур под нужный цвет в теме",
+  "he_addon.gui.theme_select.button.create_desc": "Создать новую тему",
+  "he_addon.gui.theme_select.button.edit_desc": "Редактировать тему",
+  "he_addon.gui.theme_select.button.delete_desc": "Удалить тему",
+  "he_addon.gui.theme_select.button.close_desc": "Закрыть"
 }

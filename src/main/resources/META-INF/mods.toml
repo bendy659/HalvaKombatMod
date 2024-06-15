@@ -36,3 +36,9 @@ credits="Small boobs :("
     versionRange="[1.5.4,)"
     ordering = "NONE"
     side = "BOTH"
+[[dependencies.he_addon]]
+    modId="hc"
+    mandatory=true
+    versionRange="[1.6.2,)"
+    ordering = "NONE"
+    side = "BOTH"
