@@ -6,26 +6,33 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.world.entity.vehicle.Minecart
 import org.jetbrains.kotlin.codegen.intrinsics.ArrayOf
+import org.jetbrains.kotlin.konan.file.File
 import ru.benos.he_addon.HEAddon
-import java.io.File
+import ru.hollowhorizon.hc.client.utils.stream
+import ru.hollowhorizon.hc.common.ui.gui
+import ru.hollowhorizon.hollowengine.common.files.DirectoryManager.HOLLOW_ENGINE
+import ru.hollowhorizon.repack.gnu.trove.THashMap
+import java.io.IOException
 
 object ThemesReaderWriter {
+  val THEME_DIR = HOLLOW_ENGINE.resolve("themes")
+  val THEME_GUI = THEME_DIR.resolve("gui")
 
   fun themeGuiReading(): Array<String> {
-    val folders = ResourceLocation("he_addon", "theme/gui").path
-    val resource = Minecraft.getInstance().resourceManager.listResources(folders) { true }
     var guiArray = arrayOf("NONE")
 
-    try {
-      for(folder in resource) {
-        val folderName = folder.key.path
-        if(folderName.isNotEmpty()) guiArray += folderName
+    File(THEME_GUI.path).listFiles.forEach { folder ->
+      if(folder.isDirectory) {
+        val gui_init = File(folder, "gui-init.txt")
 
+        if(gui_init.exists) {
+          val init_gui_name = gui_init.readStrings()
+
+          guiArray += init_gui_name
+          HEAddon.LOGGER.debug("[THEME] GUI Loaded: {}", guiArray.joinToString(", "))
+        }
       }
-    } catch(e: Exception) {
-      e.printStackTrace()
     }
-    HEAddon.LOGGER.debug(guiArray.joinToString())
     return guiArray
   }
 

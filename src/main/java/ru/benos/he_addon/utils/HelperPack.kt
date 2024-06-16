@@ -134,7 +134,7 @@ object HelperPack {
   /**
    * Helper translation
    */
-  public fun lang(translationID: String = "empty"): String {
+  fun lang(translationID: String = "empty"): String {
     return Language.getInstance().getOrDefault("$MODID." + translationID)
   }
 }

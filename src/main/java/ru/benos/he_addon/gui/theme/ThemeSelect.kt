@@ -29,7 +29,7 @@ object ThemeSelect : HollowScreen() {
 
     ImguiHandler.drawFrame {
       window(
-        "theme_selec",
+        "theme_select",
         ImGuiWindowFlags.NoResize or ImGuiWindowFlags.NoMove or ImGuiWindowFlags.NoTitleBar
           or ImGuiWindowFlags.NoCollapse or ImGuiWindowFlags.NoScrollbar or ImGuiWindowFlags.NoScrollWithMouse
       ) {

@@ -9,6 +9,7 @@ import imgui.ImGui
 import imgui.flag.ImGuiStyleVar
 import imgui.flag.ImGuiWindowFlags
 import imgui.type.ImBoolean
+import imgui.type.ImInt
 import net.minecraftforge.fml.loading.FMLPaths
 import ru.benos.he_addon.HEAddon
 import ru.benos.he_addon.HEAddon.Companion.MODID
@@ -25,24 +26,38 @@ import java.time.Instant
 object Config : HollowScreen() {
   val CONFIGDIR = FMLPaths.GAMEDIR.get().resolve("config").toFile()
   val fileConfig = File(CONFIGDIR, "$MODID.json")
-  var openOldMenu = ImBoolean().apply {
+  private var openOldMenu = ImBoolean().apply {
     val check = getConfig("openOldGUI")
 
     if (check is Boolean) set(check)
     else set(false)
   }
-  var debugMode = ImBoolean().apply {
+  private var debugMode = ImBoolean().apply {
     val check = getConfig("debugMode")
 
     if(check is Boolean) set(check)
     else set(false)
   }
-  var npcToolMenu_newIcons = ImBoolean().apply {
+  private var npcToolMenu_newIcons = ImBoolean().apply {
     val check = getConfig("npcToolMenu_newIcons")
 
     if(check is Boolean) set(check)
     else set(false)
   }
+  private var showRealNodeEditorIcon = ImBoolean().apply {
+    val check = getConfig("showRealNodeEditorIcon")
+
+    if(check is Boolean) set(check)
+    else set(false)
+  }
+
+  private val categories = arrayOf(
+    lang("gui.config.category.none"),
+    lang("gui.config.category.client"),
+    lang("gui.config.category.common"),
+    lang("gui.config.category.jokes"),
+    lang("gui.config.category.other"),
+  ); private var categories_select = ImInt(0)
 
   public override fun init() {
     if(!fileConfig.exists()) generateConfig()
@@ -55,14 +70,12 @@ object Config : HollowScreen() {
     confBool["debugMode"] = false
     confBool["openOldMenu"] = false
     confBool["npcToolMenu_newIcons"] = false
+    confBool["showRealNodeEditorIcon"] = false
 
     val result = gsonBuild.toJson(confBool)
     FileWriter(fileConfig).use { writed -> writed.write(result) }
     HEAddon.LOGGER.warn("Config file not found. Generated now!")
   }
-
-  private var buttonReGerConfigTrigger = false;
-  private var buttonReGenConfigDuration: Instant? = null
 
   private fun setConfig(config: String, value: Any) {
     val jsonObj = JsonParser.parseReader(FileReader(fileConfig)).asJsonObject
@@ -109,25 +122,30 @@ object Config : HollowScreen() {
         ImGui.setCursorPosX(116f)
         ImGui.beginChild("Main window", 1024f, 580f)
 
-          ImGui.newLine()
+        ImGui.newLine()
 
-          if( checkbox("debugMode", debugMode) )
-              setConfig("debugMode", debugMode.get())
+        ImGui.pushItemWidth(256f)
+        ImGui.combo("##categories", categories_select, categories); ImGui.sameLine(); ImGui.text(" ${lang("gui.config.categories")}")
+        ImGui.popItemWidth()
 
+        ImGui.newLine()
 
-          ImGui.newLine()
-          ImGui.separator()
-          ImGui.newLine()
-
-          if( checkbox("openOldMenu", openOldMenu) )
-            setConfig("openOldMenu", openOldMenu.get())
+        if(categories_select.get() == 1) {
+          if( checkbox("openOldMenu", openOldMenu) ) setConfig("openOldMenu", openOldMenu.get())
 
           ImGui.newLine()
-          ImGui.separator()
-          ImGui.newLine()
 
-          if( checkbox("npcToolMenu_newIcons", npcToolMenu_newIcons) )
-            setConfig("npcToolMenu_newIcons", npcToolMenu_newIcons.get())
+          if( checkbox("npcToolMenu_newIcons", npcToolMenu_newIcons) ) setConfig("npcToolMenu_newIcons", npcToolMenu_newIcons.get())
+        }
+        if(categories_select.get() == 2) {}
+        if(categories_select.get() == 3) {
+          if(checkbox("showRealNodeEditorIcon", showRealNodeEditorIcon)) setConfig("showRealNodeEditorIcon", showRealNodeEditorIcon.get())
+        }
+        if(categories_select.get() == 4) {
+          if( checkbox("debugMode", debugMode) ) setConfig("debugMode", debugMode.get())
+        }
+
+          ImGui.newLine()
 
         ImGui.endChild()
         ImGui.popStyleVar()
