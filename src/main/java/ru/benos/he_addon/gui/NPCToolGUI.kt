@@ -17,7 +17,7 @@ import ru.hollowhorizon.hollowengine.client.gui.npcs.ScriptNodeEditor
 import ru.hollowhorizon.hollowengine.common.entities.NPCEntity
 
 class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
-  val
+  val nodeEditorIconAlt = getConfig("showRealNodeEditorIcon")
 
   override fun render(pPoseStack: PoseStack, pMouseX: Int, pMouseY: Int, pPartialTick: Float) {
     ImguiHandler.drawFrame {
@@ -41,7 +41,7 @@ class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
         }
         sameLine()
 
-        if (imageButton(if() "nodes" else "nodes0", lang("gui.npc_tool.npc_actions"))) {
+        if (imageButton(if(nodeEditorIconAlt is Boolean && nodeEditorIconAlt) "nodes" else "nodes0", lang("gui.npc_tool.npc_actions"))) {
           ScriptNodeEditor(npc).open()
         }
         sameLine()
