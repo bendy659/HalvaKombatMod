@@ -75,6 +75,7 @@
   "he_addon.gui.theme_select.colors_desc": "Перекрас текстур под нужный цвет в теме",
   "he_addon.gui.theme_select.button.create_desc": "Создать новую тему",
   "he_addon.gui.theme_select.button.edit_desc": "Редактировать тему",
+  "he_addon.gui.theme_select.button.reload_desc": "Перезагрузить темы",
   "he_addon.gui.theme_select.button.delete_desc": "Удалить тему",
   "he_addon.gui.theme_select.button.close_desc": "Закрыть"
 }

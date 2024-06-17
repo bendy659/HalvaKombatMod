@@ -51,16 +51,18 @@ object Config : HollowScreen() {
     else set(false)
   }
 
-  private val categories = arrayOf(
+  private var categories = arrayOf(""); private var categories_select = ImInt(0)
+
+  public override fun init() {
+    if(!fileConfig.exists()) generateConfig()
+
+    categories = arrayOf(
     lang("gui.config.category.none"),
     lang("gui.config.category.client"),
     lang("gui.config.category.common"),
     lang("gui.config.category.jokes"),
     lang("gui.config.category.other"),
-  ); private var categories_select = ImInt(0)
-
-  public override fun init() {
-    if(!fileConfig.exists()) generateConfig()
+  )
   }
 
   private fun generateConfig() {

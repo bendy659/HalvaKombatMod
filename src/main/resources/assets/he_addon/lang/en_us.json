@@ -75,6 +75,7 @@
   "he_addon.gui.theme_select.colors_desc": "none2",
   "he_addon.gui.theme_select.button.create_desc": "Create new theme",
   "he_addon.gui.theme_select.button.edit_desc": "Edit this theme",
+  "he_addon.gui.theme_select.button.reload_desc": "Reload themes",
   "he_addon.gui.theme_select.button.delete_desc": "Delete this theme",
   "he_addon.gui.theme_select.button.close_desc": "Close"
 }

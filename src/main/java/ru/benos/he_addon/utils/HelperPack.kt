@@ -57,7 +57,7 @@ object HelperPack {
    */
   fun imageButton(
     text: String,
-    texturePath: String = "hollowengine:textures/gui/npc_create/button.png",
+    texturePath: String = "hollowengine:textures/gui/npc_create/button",
     sizeX: Float, sizeY: Float,
     posX: Float, posY: Float,
     fontSize: Int,
@@ -76,9 +76,15 @@ object HelperPack {
 
     ImGui.setCursorPos(posX - 15, posY)
     ImGui.image(
-      texturePath.rl.toTexture().id,
+      "${texturePath}0.png".rl.toTexture().id,
       sizeX + 30, sizeY,
-      type[id.get() + 1], type[id.get() + 2], type[id.get() + 3], type[id.get() + 4]
+      //type[id.get() + 1], type[id.get() + 2], type[id.get() + 3], type[id.get() + 4]
+    )
+    ImGui.setCursorPos(posX - 15, posY)
+    ImGui.image(
+      "${texturePath}1.png".rl.toTexture().id,
+      sizeX + 30, sizeY,
+      //type[id.get() + 1], type[id.get() + 2], type[id.get() + 3], type[id.get() + 4]
     )
 
     ImGui.pushID("tabs.tab-$text")

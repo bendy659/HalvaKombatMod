@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.world.entity.player.Player
 import ru.benos.he_addon.HEAddon.Companion.MODID
 import ru.benos.he_addon.utils.HelperPack
+import ru.benos.he_addon.utils.HelperPack.imageButton
 import ru.benos.he_addon.utils.HelperPack.lang
 import ru.hollowhorizon.hc.client.handlers.TickHandler
 import ru.hollowhorizon.hc.client.imgui.ImGuiMethods
@@ -105,7 +106,7 @@ class HEAddon_NPCCreatorGUI(
 
       ImGui.setCursorPos(ImGui.getWindowWidth() / 64f, ImGui.getWindowHeight() / 64f)
       ImGui.image(
-        "hollowengine:textures/gui/npc_create/bg/bg0.png".rl.toTexture().id,
+        "$MODID:textures/gui/npc_create/bg0.png".rl.toTexture().id,
         ImGui.getWindowWidth() - 65,
         ImGui.getWindowHeight() - 32,
         0f, 0f, 1f, 1f,
@@ -114,7 +115,7 @@ class HEAddon_NPCCreatorGUI(
       )
       ImGui.setCursorPos(ImGui.getWindowWidth() / 64f, ImGui.getWindowHeight() / 64f)
       ImGui.image(
-        "hollowengine:textures/gui/npc_create/bg/bg1.png".rl.toTexture().id,
+        "$MODID:textures/gui/npc_create/bg1.png".rl.toTexture().id,
         ImGui.getWindowWidth() - 65,
         ImGui.getWindowHeight() - 32,
         0f, 0f, 1f, 1f,
@@ -136,7 +137,7 @@ class HEAddon_NPCCreatorGUI(
       if( // Basic
         HelperPack.imageButton(
           HelperPack.lang("gui.npc_create.tabs.base"),
-          "hollowengine:textures/gui/npc_create/tab.png",
+          "$MODID:textures/gui/npc_create/tab",
           145f, 60f,
           tab0, 60f,
           4,
@@ -147,7 +148,7 @@ class HEAddon_NPCCreatorGUI(
       if( // Visual
         HelperPack.imageButton(
           HelperPack.lang("gui.npc_create.tabs.visual"),
-          "hollowengine:textures/gui/npc_create/tab.png",
+          "$MODID:textures/gui/npc_create/tab",
           210f, 60f,
           tab1, 60f,
           4,
@@ -158,7 +159,7 @@ class HEAddon_NPCCreatorGUI(
       if( // Animations
         HelperPack.imageButton(
           HelperPack.lang("gui.npc_create.tabs.animations"),
-          "hollowengine:textures/gui/npc_create/tab.png",
+          "$MODID:textures/gui/npc_create/tab",
           210f, 60f,
           tab2, 60f,
           4,
@@ -169,7 +170,7 @@ class HEAddon_NPCCreatorGUI(
       if( // Transformations
         HelperPack.imageButton(
           HelperPack.lang("gui.npc_create.tabs.transformations"),
-          "hollowengine:textures/gui/npc_create/tab.png",
+          "$MODID:textures/gui/npc_create/tab",
           280f, 60f,
           tab3, 60f,
           4,
@@ -180,7 +181,7 @@ class HEAddon_NPCCreatorGUI(
       if( // Attributes
         HelperPack.imageButton(
           HelperPack.lang("gui.npc_create.tabs.attributes"),
-          "hollowengine:textures/gui/npc_create/tab.png",
+          "$MODID:textures/gui/npc_create/tab",
           210f, 60f,
           tab4, 60f,
           4,
@@ -204,7 +205,7 @@ class HEAddon_NPCCreatorGUI(
       ImGui.setCursorPos(1330f, 0f)
       ImGui.beginChild("gui.npc_create.entity.bg", 600f, 1250f)
       ImGui.setCursorPos(0f, 120f)
-      ImGui.image("hollowengine:textures/gui/npc_create/entity_bg.png".rl.toTexture().id, 500f, 750f, 0f, 0f, 1f, 1f, 1f, 1f, 1f, 0.85f)
+      ImGui.image("$MODID:textures/gui/npc_create/entity_bg.png".rl.toTexture().id, 500f, 750f, 0f, 0f, 1f, 1f, 1f, 1f, 1f, 0.85f)
         ImGui.setCursorPos(-50f, -530f)
         ImGui.beginChild("gui.npc_create.entity", 600f, 1250f, false, ImGuiWindowFlags.NoScrollbar or ImGuiWindowFlags.NoScrollWithMouse)
           val disp = Minecraft.getInstance().entityRenderDispatcher
@@ -216,7 +217,7 @@ class HEAddon_NPCCreatorGUI(
         ImGui.endChild()
           ImGui.setCursorPos(100f, 775f)
           HelperPack.checkbox(
-            "hollowengine:textures/gui/npc_create/checkbox.png",
+            "$MODID:textures/gui/npc_create/checkbox.png",
             HelperPack.lang("gui.npc_create.data.hitbox.show"),
             showHitbox,
             48f, 48f
@@ -228,7 +229,7 @@ class HEAddon_NPCCreatorGUI(
       if (
         HelperPack.imageButton(
           HelperPack.lang(if(!isEditor) "gui.npc_create.buttons.create" else "gui.npc_create.buttons.save"),
-          "hollowengine:textures/gui/npc_create/button.png",
+          "$MODID:textures/gui/npc_create/button",
           256f, 116f,
           20f, 0f,
           fontSize = 5
@@ -258,9 +259,9 @@ class HEAddon_NPCCreatorGUI(
         onClose()
       }
       if(
-        HelperPack.imageButton(
+        imageButton(
           HelperPack.lang("gui.npc_create.buttons.cancel"),
-          "hollowengine:textures/gui/npc_create/button.png",
+          "$MODID:textures/gui/npc_create/button",
           256f, 116f,
           320f, 0f,
 
@@ -298,7 +299,7 @@ class HEAddon_NPCCreatorGUI(
     ImGui.text(HelperPack.lang("gui.npc_create.data.options"))
     if(
       HelperPack.checkbox(
-        "hollowengine:textures/gui/npc_create/checkbox.png",
+        "$MODID:textures/gui/npc_create/checkbox.png",
         HelperPack.lang("gui.npc_create.data.options.show_name"),
         showName,
         48f,
@@ -307,7 +308,7 @@ class HEAddon_NPCCreatorGUI(
     ) npc.isCustomNameVisible = showName.get()
     if(
       HelperPack.checkbox(
-        "hollowengine:textures/gui/npc_create/checkbox.png",
+        "$MODID:textures/gui/npc_create/checkbox.png",
         HelperPack.lang("gui.npc_create.data.options.switch_head_rot"),
         switchHeadRot,
         48f,
@@ -316,7 +317,7 @@ class HEAddon_NPCCreatorGUI(
     ) {}
     if(
       HelperPack.checkbox(
-      "hollowengine:textures/gui/npc_create/checkbox.png",
+      "$MODID:textures/gui/npc_create/checkbox.png",
       HelperPack.lang("gui.npc_create.data.options.invulnerable"),
       invulnerable,
       48f,

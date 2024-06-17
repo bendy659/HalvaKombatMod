@@ -18,6 +18,9 @@ import ru.hollowhorizon.hollowengine.common.entities.NPCEntity
 
 class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
   val nodeEditorIconAlt = getConfig("showRealNodeEditorIcon")
+  //val nodeEditorSwapIcon =
+  //  if(nodeEditorIconAlt is Boolean && nodeEditorIconAlt) "nodes0"
+  //  else "nodes"
 
   override fun render(pPoseStack: PoseStack, pMouseX: Int, pMouseY: Int, pPartialTick: Float) {
     ImguiHandler.drawFrame {
@@ -33,7 +36,12 @@ class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
         ImGui.separator()
         ImGui.newLine()
 
-        if (imageButton("wrench", lang("gui.npc_tool.npc_editing"))) {
+        if(
+          imageButton(
+            "wrench",
+            lang("gui.npc_tool.npc_editing"),
+            ImGui.getWindowWidth() / 8f)
+        ) {
           val oldMenuOpen = getConfig("openOldMenu")
 
           if(oldMenuOpen is Boolean && !oldMenuOpen) HEAddon_NPCCreatorGUI(npc, npc.id, true).open()
@@ -41,22 +49,36 @@ class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
         }
         sameLine()
 
-        if (imageButton(if(nodeEditorIconAlt is Boolean && nodeEditorIconAlt) "nodes" else "nodes0", lang("gui.npc_tool.npc_actions"))) {
+        if(
+          imageButton(
+            if(nodeEditorIconAlt is Boolean && !nodeEditorIconAlt)
+              "nodes"
+            else
+              "nodes0",
+            lang("gui.npc_tool.npc_actions"),
+            ImGui.getWindowWidth() / 8f)
+        ) {
           ScriptNodeEditor(npc).open()
         }
         sameLine()
 
-        imageButton("pose", lang("gui.npc_tool.npc_poses"))
+        if(
+          imageButton(
+            "pose",
+            lang("gui.npc_tool.npc_poses"),
+            ImGui.getWindowWidth() / 8f
+          )
+        ) {}
         ImGui.newLine()
       }
     }
   }
 
-  private fun imageButton(icon: String, desc: String): Boolean {
+  private fun imageButton(icon: String, desc: String, size: Float): Boolean {
     val config = getConfig("npcToolMenu_newIcons")
     val isClicked =
-      if(config is Boolean && !config) ImGui.imageButton("hollowengine:textures/gui/icons/$icon.png".rl.toTexture().id, 256f, 256f)
-      else ImGui.imageButton("he_addon:textures/gui/npc_tool/$icon.png".rl.toTexture().id, 256f, 256f)
+      if(config is Boolean && !config)  ImGui.imageButton("hollowengine:textures/gui/icons/$icon.png".rl.toTexture().id, size, size)
+      else ImGui.imageButton("he_addon:textures/gui/npc_tool/$icon.png".rl.toTexture().id, size, size)
 
     if (ImGui.isItemHovered()) ImGui.setTooltip(desc)
     return isClicked
