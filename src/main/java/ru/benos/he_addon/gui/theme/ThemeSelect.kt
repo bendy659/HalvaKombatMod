@@ -44,8 +44,7 @@ object ThemeSelect : HollowScreen() {
 
         ImGui.pushItemWidth(584f)
         ImGui.setCursorPosX(16f)
-        if(ImGui.combo("##menu", menu_select, menus.map { it.guiName }.toTypedArray()))
-          packs =  themePackReading(menus.map { it.folderName }[menu_select.get()], menu_select.get())
+        ImGui.combo("##menu", menu_select, menus.map { it.guiName }.toTypedArray())
         ImGui.sameLine()
         label("menus")
         ImGui.newLine()
@@ -75,6 +74,7 @@ object ThemeSelect : HollowScreen() {
         if(button("reload")) {
           menus = themeGuiReading()
           packs = themePackReading(menus.map { it.folderName }[menu_select.get()], menu_select.get())
+          colors = themeColorsReading(menus.map { it.folderName }[menu_select.get()], menu_select.get())
         }
 
         ImGui.setCursorPos(ImGui.getWindowWidth() - 36, 4f)

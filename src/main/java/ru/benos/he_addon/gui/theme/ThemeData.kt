@@ -1,9 +1,12 @@
 package ru.benos.he_addon.gui.theme
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import org.jetbrains.kotlin.konan.file.File
 import org.jetbrains.kotlin.util.removeSuffixIfPresent
 import ru.benos.he_addon.HEAddon
 import ru.hollowhorizon.hollowengine.common.files.DirectoryManager.HOLLOW_ENGINE
+import java.io.FileReader
 
 object ThemeData {
   val THEME_DIR = HOLLOW_ENGINE.resolve("themes")
@@ -42,11 +45,11 @@ object ThemeData {
             val init_pack_name = pack_init.readStrings()
 
             packsArray += init_pack_name
-            HEAddon.LOGGER.debug("[THEME] Packs Loaded: {}", packsArray.joinToString(", "))
           }
         }
       }
     } else packsArray += "Packs not found"
+    HEAddon.LOGGER.debug("[THEME] Packs Loaded: {}", packsArray.joinToString(", "))
     return packsArray.filter { it.isNotEmpty() }.toTypedArray()
   }
 
@@ -54,12 +57,16 @@ object ThemeData {
     var colorsArray = arrayOf("Default")
 
     if(guiSelectID == "none" && selectGuiID >= 1) {
-      val colorDir = File(THEME_COLORS.path)
-
-      if(colorDir.exists && colorDir.isDirectory) {
-        colorsArray = colorDir.listFiles
+      File(THEME_COLORS.path).listFiles.filter { it.name.endsWith(".json") }.forEach { file ->
+        if(file.exists && file.isDirectory) {
+          val gson = Gson()
+          val read = FileReader(file.name)
+          val result = gson.fromJson(read, JsonObject::class.java).getAsJsonObject("Name").asString
+          colorsArray += result.toList().toTypedArray().toString()
+        }
       }
     } else colorsArray += "Colors not found"
+    HEAddon.LOGGER.debug("[THEME] Colors Loaded: {}", colorsArray.joinToString(", "))
     return colorsArray.filter { it.isNotEmpty() }.toTypedArray()
   }
 }

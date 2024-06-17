@@ -14,6 +14,7 @@ import ru.benos.he_addon.KeyBinds.initKeys
 import ru.benos.he_addon.events.ClientEvents
 import ru.benos.he_addon.events.ScreenEvents
 import ru.benos.he_addon.gui.Config
+import ru.benos.he_addon.registries.HEAddonRegistries
 
 @Mod(HEAddon.MODID)
 class HEAddon {
@@ -26,12 +27,11 @@ class HEAddon {
         val forgeBus = MinecraftForge.EVENT_BUS
         val modBus = thedarkcolour.kotlinforforge.forge.MOD_BUS
 
-        forgeBus.register(this)
         LOGGER.info("'HollowEngine | ADDON' - loading...")
 
-        modBus.addListener(::setup)
-        modBus.addListener(::setupComplete)
+        forgeBus.register(HEAddonRegistries)
 
+        modBus.addListener(::setup)
         if(FMLEnvironment.dist.isClient) {
             LOGGER.info("'HollowEngine | ADDON' - start loading client...")
 
@@ -47,6 +47,11 @@ class HEAddon {
 
             LOGGER.info("'HollowEngine | ADDON' - loading client complete.")
         }
+        HEAddonRegistries.init()
+
+        modBus.addListener(::setupComplete)
+
+        forgeBus.register(this)
         LOGGER.info("'HollowEngine | ADDON' - loading complete.")
     }
 
