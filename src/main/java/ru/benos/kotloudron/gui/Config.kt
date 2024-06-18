@@ -54,6 +54,13 @@ object Config : HollowScreen() {
   private var categories = arrayOf(""); private var categories_select = ImInt(0)
 
   public override fun init() {
+    if(!fileConfig.exists()) {
+      generateConfig()
+      Kotloudron.LOGGER.warn("[Kotloudron] Config file not found. Generated now!")
+    } else {
+      Kotloudron.LOGGER.debug("[Kotloudron] Config file exists.")
+    }
+
     categories = arrayOf(
     lang("gui.config.category.none"),
     lang("gui.config.category.client"),
@@ -64,17 +71,40 @@ object Config : HollowScreen() {
   }
 
   fun generateConfig() {
-    val confBool = LinkedHashMap<String, Boolean>()
+    try {
+      val confBool = LinkedHashMap<String, Boolean>()
 
-    val gsonBuild = GsonBuilder().setPrettyPrinting().create()
-    confBool["debugMode"] = false
-    confBool["openOldMenu"] = false
-    confBool["npcToolMenu_newIcons"] = false
-    confBool["showRealNodeEditorIcon"] = false
+      val gsonBuild = GsonBuilder().setPrettyPrinting().create()
+      confBool["debugMode"] = false
+      confBool["openOldMenu"] = false
+      confBool["npcToolMenu_newIcons"] = false
+      confBool["showRealNodeEditorIcon"] = false
 
-    val result = gsonBuild.toJson(confBool)
-    FileWriter(fileConfig).use { writed -> writed.write(result) }
-    Kotloudron.LOGGER.warn("Config file not found. Generated now!")
+      val result = gsonBuild.toJson(confBool)
+      FileWriter(fileConfig).use { writed -> writed.write(result) }
+      Kotloudron.LOGGER.debug(
+        """
+        / ============================================================================================= \
+        | CONFIG DEBUGING
+        | --------------------------------------------------------------------------------------------- |
+        | Config '${fileConfig.name}' create to path: [${fileConfig.path}]
+        \ ============================================================================================= /
+      """.trimIndent()
+      )
+    } catch(e: Exception) {
+      Kotloudron.LOGGER.error(
+        """
+        / ===============================================================
+        | CONFIG DEBIGING
+        | ---------------------------------------------------------------
+        | Config generate has FAILED!!!
+        | ---------------------------------------------------------------
+        | ERROR GENERAGET CONFIG.
+        | LOG: ${e.printStackTrace()}
+        \ ===============================================================
+        """.trimIndent()
+      )
+    }
   }
 
   private fun setConfig(config: String, value: Any) {
@@ -173,9 +203,5 @@ object Config : HollowScreen() {
 
     if(ImGui.isItemHovered()) ImGui.setTooltip(lang("gui.config.button.${text}_desc"))
     return isClick
-  }
-
-  fun configExistsCheck() {
-    if(!fileConfig.exists()) generateConfig()
   }
 }
