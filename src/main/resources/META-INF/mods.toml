@@ -1,42 +1,45 @@
 modLoader = "kotlinforforge"
 loaderVersion = "[3,)"
 license = "MIT License"
-logoFile="he_addon-logo.png"
+logoFile= "../kotloudron-logo.png"
 authors="_BENDY659_"
 credits="Small boobs :("
 
 [[mods]]
-    modId = "he_addon"
+    modId = "kotloudron"
     version = "${file.jarVersion}"
-    displayName = "HollowEngine | ADDON"
-    description = '''
-    HollowEngine | ADDON - ths special addon for mod 'HollowEngine' by 'HollowHorizon'
-    '''
-[[dependencies.he_addon]]
+    displayName = "Kotloudron"
+    description = "This special addon for mod 'HollowEngine'."
+
+[[dependencies.kotloudron]]
     modId = "forge"
     mandatory = true
     versionRange = "[43.2.6,44.0.0)"
     ordering = "NONE"
     side = "BOTH"
-[[dependencies.he_addon]]
+
+[[dependencies.kotloudron]]
     modId = "minecraft"
     mandatory = true
     versionRange = "[1.19,1.19.3)"
     ordering = "NONE"
     side = "BOTH"
-[[dependencies.he_addon]]
+
+[[dependencies.kotloudron]]
     modId="kotlinforforge"
     mandatory=true
     versionRange="[3.12.0,)"
     ordering = "AFTER"
     side = "BOTH"
-[[dependencies.he_addon]]
+
+[[dependencies.kotloudron]]
     modId="hollowengine"
     mandatory=true
     versionRange="[1.5.4,)"
     ordering = "NONE"
     side = "BOTH"
-[[dependencies.he_addon]]
+
+[[dependencies.kotloudron]]
     modId="hc"
     mandatory=true
     versionRange="[1.6.2,)"

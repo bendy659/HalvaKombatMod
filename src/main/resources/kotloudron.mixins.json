@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ru.benos.kotloudron.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "Kotloudron.refmap.json",
+  "mixins": [],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

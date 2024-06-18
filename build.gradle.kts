@@ -126,7 +126,7 @@ fun Jar.createManifest() = manifest {
 }
 
 configure<MixinExtension> {
-  add(sourceSets.main.get(), "he_addon.refmap.json")
+  add(sourceSets.main.get(), "kotloudron.refmap.json")
 }
 
 val jar = tasks.named<Jar>("jar") {

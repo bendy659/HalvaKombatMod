@@ -16,4 +16,4 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0"
 }
 
-rootProject.name = "HollowEngine - ADDON"
+rootProject.name = "Kotloudron (Addon for HollowEngine)"
