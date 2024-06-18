@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent
 import net.minecraftforge.fml.loading.FMLEnvironment
 import org.slf4j.Logger
@@ -14,9 +15,9 @@ import ru.benos.kotloudron.KeyBinds.initKeys
 import ru.benos.kotloudron.events.ClientEvents
 import ru.benos.kotloudron.events.ScreenEvents
 import ru.benos.kotloudron.gui.Config
-import ru.benos.kotloudron.gui.Config.fileConfig
-import ru.benos.kotloudron.gui.Config.generateConfig
+import ru.benos.kotloudron.gui.Config.configExistsCheck
 import ru.benos.kotloudron.registries.KotloudronRegistries
+import ru.hollowhorizon.hc.common.ui.register
 
 @Mod(Kotloudron.MODID)
 class Kotloudron {
@@ -33,7 +34,7 @@ class Kotloudron {
 
         forgeBus.register(KotloudronRegistries)
 
-        if(!fileConfig.exists()) generateConfig()
+        configExistsCheck()
 
         modBus.addListener(::setup)
         if(FMLEnvironment.dist.isClient) {
@@ -42,7 +43,6 @@ class Kotloudron {
             forgeBus.register(KeyBinds)
             forgeBus.register(ClientEvents)
             forgeBus.register(ScreenEvents)
-            forgeBus.register(Config)
 
             forgeBus.addListener(ScreenEvents::onGuiOpen)
             forgeBus.addListener(ScreenEvents::onNpcToolGuiOpen)
@@ -62,6 +62,7 @@ class Kotloudron {
 
     private fun setup(event: FMLCommonSetupEvent) {
         LOGGER.info("[Kotloudron] Start common setup...")
+
         LOGGER.info("[Kotloudron] Common setup completed.")
     }
     private fun setupComplete(event: FMLLoadCompleteEvent) {}

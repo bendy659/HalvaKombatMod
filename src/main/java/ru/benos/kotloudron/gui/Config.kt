@@ -10,6 +10,7 @@ import imgui.flag.ImGuiStyleVar
 import imgui.flag.ImGuiWindowFlags
 import imgui.type.ImBoolean
 import imgui.type.ImInt
+import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.loading.FMLPaths
 import ru.benos.kotloudron.Kotloudron
 import ru.benos.kotloudron.Kotloudron.Companion.MODID
@@ -172,5 +173,9 @@ object Config : HollowScreen() {
 
     if(ImGui.isItemHovered()) ImGui.setTooltip(lang("gui.config.button.${text}_desc"))
     return isClick
+  }
+
+  fun configExistsCheck() {
+    if(!fileConfig.exists()) generateConfig()
   }
 }
