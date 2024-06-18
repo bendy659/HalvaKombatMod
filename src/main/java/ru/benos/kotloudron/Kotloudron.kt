@@ -14,6 +14,8 @@ import ru.benos.kotloudron.KeyBinds.initKeys
 import ru.benos.kotloudron.events.ClientEvents
 import ru.benos.kotloudron.events.ScreenEvents
 import ru.benos.kotloudron.gui.Config
+import ru.benos.kotloudron.gui.Config.fileConfig
+import ru.benos.kotloudron.gui.Config.generateConfig
 import ru.benos.kotloudron.registries.KotloudronRegistries
 
 @Mod(Kotloudron.MODID)
@@ -30,6 +32,8 @@ class Kotloudron {
         LOGGER.info("'[Kotloudron]' loading...")
 
         forgeBus.register(KotloudronRegistries)
+
+        if(!fileConfig.exists()) generateConfig()
 
         modBus.addListener(::setup)
         if(FMLEnvironment.dist.isClient) {
@@ -58,7 +62,6 @@ class Kotloudron {
 
     private fun setup(event: FMLCommonSetupEvent) {
         LOGGER.info("[Kotloudron] Start common setup...")
-        Config.init()
         LOGGER.info("[Kotloudron] Common setup completed.")
     }
     private fun setupComplete(event: FMLLoadCompleteEvent) {}

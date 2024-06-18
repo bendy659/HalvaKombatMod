@@ -24,7 +24,7 @@ import java.io.FileWriter
 // Зачем нам обычный конфиг, когда можно создать свой)))
 object Config : HollowScreen() {
   private val CONFIGDIR = FMLPaths.GAMEDIR.get().resolve("config").toFile()
-  private val fileConfig = File(CONFIGDIR, "$MODID.json")
+  val fileConfig = File(CONFIGDIR, "$MODID.json")
   private var openOldMenu = ImBoolean().apply {
     val check = getConfig("openOldGUI")
 
@@ -53,8 +53,6 @@ object Config : HollowScreen() {
   private var categories = arrayOf(""); private var categories_select = ImInt(0)
 
   public override fun init() {
-    if(!fileConfig.exists()) generateConfig()
-
     categories = arrayOf(
     lang("gui.config.category.none"),
     lang("gui.config.category.client"),
@@ -64,7 +62,7 @@ object Config : HollowScreen() {
   )
   }
 
-  private fun generateConfig() {
+  fun generateConfig() {
     val confBool = LinkedHashMap<String, Boolean>()
 
     val gsonBuild = GsonBuilder().setPrettyPrinting().create()
