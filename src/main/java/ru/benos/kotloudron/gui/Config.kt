@@ -10,6 +10,7 @@ import imgui.flag.ImGuiStyleVar
 import imgui.flag.ImGuiWindowFlags
 import imgui.type.ImBoolean
 import imgui.type.ImInt
+import net.minecraftforge.eventbus.api.Event
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.loading.FMLPaths
 import ru.benos.kotloudron.Kotloudron
@@ -24,9 +25,10 @@ import java.io.FileReader
 import java.io.FileWriter
 
 // Зачем нам обычный конфиг, когда можно создать свой)))
-object Config : HollowScreen() {
+object Config: HollowScreen() {
   private val CONFIGDIR = FMLPaths.GAMEDIR.get().resolve("config").toFile()
   val fileConfig = File(CONFIGDIR, "$MODID-config.json")
+
   private var openOldMenu = ImBoolean().apply {
     val check = getConfig("openOldGUI")
 
@@ -54,7 +56,7 @@ object Config : HollowScreen() {
 
   private var categories = arrayOf(""); private var categories_select = ImInt(0)
 
-  override fun init() {
+  public override fun init() {
     categories = arrayOf(
       lang("gui.config.category.none"),
       lang("gui.config.category.client"),
@@ -62,67 +64,66 @@ object Config : HollowScreen() {
       lang("gui.config.category.jokes"),
       lang("gui.config.category.other"),
     )
-
-    configInit()
   }
 
-  fun configInit() {
+  fun configExists(): Boolean {
     if(!fileConfig.exists()) {
-      generateConfig()
-      Kotloudron.LOGGER.warn(desingLogging("CONFIG FILE NOT FOUND. GENERATED NOW"))
+      try { generateConfig() } catch (e: Exception) { throw e }; return false
     } else {
-      Kotloudron.LOGGER.debug(desingLogging("CONFIG FILE EXISTS"))
+      Kotloudron.LOGGER.debug(desingLogging("CONFIG FILE EXISTS")); return true
     }
   }
 
   private fun generateConfig() {
-    try {
-      val confBool = LinkedHashMap<String, Boolean>()
+    val confBool = LinkedHashMap<String, Boolean>()
 
-      val gsonBuild = GsonBuilder().setPrettyPrinting().create()
-      confBool["debugMode"] = false
-      confBool["openOldMenu"] = false
-      confBool["npcToolMenu_newIcons"] = false
-      confBool["showRealNodeEditorIcon"] = false
+    val gsonBuild = GsonBuilder().setPrettyPrinting().create()
+    confBool["debugMode"] = false
+    confBool["openOldMenu"] = false
+    confBool["npcToolMenu_newIcons"] = false
+    confBool["showRealNodeEditorIcon"] = false
 
-      val result = gsonBuild.toJson(confBool)
-      FileWriter(fileConfig).use { writed -> writed.write(result) }
-      Kotloudron.LOGGER.debug(desingLogging("CONFIG FILE '${fileConfig.name}' GENERATE TO PATH '${fileConfig.path}'"))
-    } catch(e: Exception) {
-      Kotloudron.LOGGER.error(desingLogging("GENERATE CONFIG HAS FAILED. ERROR GENERATE CONFIG. LOG: ${e.printStackTrace()}"))
-    }
+    val result = gsonBuild.toJson(confBool)
+    FileWriter(fileConfig).use { writed -> writed.write(result) }
+    Kotloudron.LOGGER.debug(desingLogging("CONFIG FILE '${fileConfig.name}' GENERATE TO PATH 'config/${fileConfig.name}'"))
+    Kotloudron.LOGGER.warn(desingLogging("CONFIG FILE NOT FOUND. GENERATED NOW"))
   }
 
   private fun setConfig(config: String, value: Any) {
-    configInit()
+    if(configExists()) {
+      val jsonObj = JsonParser.parseReader(FileReader(fileConfig)).asJsonObject
 
-    val jsonObj = JsonParser.parseReader(FileReader(fileConfig)).asJsonObject
-
-    when(value) {
-      is String -> jsonObj.addProperty(config, value)
-      is Int -> jsonObj.addProperty(config, value)
-      is Boolean -> jsonObj.addProperty(config, value)
-      else -> throw IllegalArgumentException("Unknown value type: ${value.javaClass.name}")
-    }
-    val result = GsonBuilder().setPrettyPrinting().create().toJson(jsonObj)
-    FileWriter(fileConfig).use { writer -> writer.write(result) }
+      when (value) {
+        is String -> jsonObj.addProperty(config, value)
+        is Int -> jsonObj.addProperty(config, value)
+        is Boolean -> jsonObj.addProperty(config, value)
+        else -> throw IllegalArgumentException("Unknown value type: ${value.javaClass.name}")
+      }
+      val result = GsonBuilder().setPrettyPrinting().create().toJson(jsonObj)
+      FileWriter(fileConfig).use { writer -> writer.write(result) }
+    } else error(desingLogging("UPDATE CONFIG HAS FAILDE. CONFIG FILE NOT FOUND"))
   }
   fun getConfig(config: String): Any? {
-    val jsonElement = Gson().fromJson(FileReader(fileConfig), JsonObject::class.java).get(config)
+    if(configExists()) {
+      val jsonElement = Gson().fromJson(FileReader(fileConfig), JsonObject::class.java).get(config)
 
-    if(jsonElement == null) return null
-    else return when {
-      jsonElement.isJsonPrimitive -> {
-        val jsonPrimitive = jsonElement.asJsonPrimitive
+      if (jsonElement == null) return null
+      else return when {
+        jsonElement.isJsonPrimitive -> {
+          val jsonPrimitive = jsonElement.asJsonPrimitive
 
-        when {
-          jsonPrimitive.isBoolean -> jsonPrimitive.asBoolean
-          jsonPrimitive.isString -> jsonPrimitive.asString
-          jsonPrimitive.isNumber -> jsonPrimitive.asNumber
-          else -> null
+          when {
+            jsonPrimitive.isBoolean -> jsonPrimitive.asBoolean
+            jsonPrimitive.isString -> jsonPrimitive.asString
+            jsonPrimitive.isNumber -> jsonPrimitive.asNumber
+            else -> null
+          }
         }
+
+        else -> null
       }
-      else -> null
+    } else {
+      error(desingLogging("GET DATA FROM CONFIG HAS FAILED. CONFIG FILE NOT FOUND"))
     }
   }
 

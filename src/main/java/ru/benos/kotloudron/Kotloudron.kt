@@ -27,6 +27,7 @@ class Kotloudron {
       LOGGER.info(desingLogging("STARTING INSTALL"))
 
       forgeBus.register(Config)
+      Config.init()
       forgeBus.register(ThemeData)
       ThemeData.init()
       forgeBus.register(KotloudronRegistries)
@@ -57,7 +58,6 @@ class Kotloudron {
 
     private fun setup(event: FMLCommonSetupEvent) {
       LOGGER.info(desingLogging("SETUP STARTING"))
-
       LOGGER.info(desingLogging("SETUP COMPLETE"))
     }
     private fun setupComplete(event: FMLLoadCompleteEvent) {}
