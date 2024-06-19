@@ -26,7 +26,7 @@ import java.io.FileWriter
 // Зачем нам обычный конфиг, когда можно создать свой)))
 object Config : HollowScreen() {
   private val CONFIGDIR = FMLPaths.GAMEDIR.get().resolve("config").toFile()
-  val fileConfig = File(CONFIGDIR, "$MODID.json")
+  val fileConfig = File(CONFIGDIR, "$MODID-config.json")
   private var openOldMenu = ImBoolean().apply {
     val check = getConfig("openOldGUI")
 

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:block",
+  "pools": [{
+    "bonus_rools": 0.0,
+    "conditions": [{"condition":  "minecraft:survival_explosion"}],
+    "entries": [{
+      "type": "minecrat:item",
+      "name": "kotloudron:kotloudron"
+    }],
+    "rolls": 1.0
+  }]
+}
