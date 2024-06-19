@@ -14,7 +14,9 @@ import ru.benos.kotloudron.KeyBinds.initKeys
 import ru.benos.kotloudron.events.ClientEvents
 import ru.benos.kotloudron.events.ScreenEvents
 import ru.benos.kotloudron.gui.Config
+import ru.benos.kotloudron.gui.theme.ThemeData
 import ru.benos.kotloudron.registries.KotloudronRegistries
+import ru.benos.kotloudron.utils.DesingLogging.desingLogging
 
 @Mod(Kotloudron.MODID)
 class Kotloudron {
@@ -22,105 +24,50 @@ class Kotloudron {
     val modBus = thedarkcolour.kotlinforforge.forge.MOD_BUS
 
     init {
-        forgeBus.register(this)
+      LOGGER.info(desingLogging("STARTING INSTALL"))
 
-        LOGGER.info(
-            """
-            / =========================== \
-            |         [KOTLOUDRON]         |
-            | ---------------------------- |
-            |         INSTALLING...        |
-            \ =========================== /
-            """.trimIndent()
-        )
+      forgeBus.register(Config)
+      forgeBus.register(ThemeData)
+      ThemeData.init()
+      forgeBus.register(KotloudronRegistries)
+      KotloudronRegistries.init()
 
-        forgeBus.register(KotloudronRegistries)
+      modBus.addListener(::setup)
+      modBus.addListener(::setupComplete)
 
-        modBus.addListener(::setup)
-        if(FMLEnvironment.dist.isClient) {
-            forgeBus.addListener(::setupClient)
-        }
-        KotloudronRegistries.init()
+      if(FMLEnvironment.dist.isClient) {
+        LOGGER.info(desingLogging("CLIENT SETUP STARTING"))
 
-        modBus.addListener(::setupComplete)
+        forgeBus.register(KeyBinds)
+        forgeBus.register(ClientEvents)
+        forgeBus.register(ScreenEvents)
 
-        LOGGER.info(
-            """
-            / ============================== \
-            |          [KOTLOUDRON]          |
-            | ------------------------------ |
-            |      INSTALLING COMPLETE       |
-            \ ============================== /
-            """.trimIndent()
-        )
+        forgeBus.addListener(ScreenEvents::onGuiOpen)
+        forgeBus.addListener(ScreenEvents::onNpcToolGuiOpen)
+        forgeBus.addListener(ScreenEvents::onNPCCreatorGuiOpen)
+
+        initKeys()
+
+        LOGGER.info(desingLogging("CLIENT SETUP COMPLETE"))
+      }
+
+      LOGGER.info(desingLogging("INSTALL COMPLETE"))
+      forgeBus.register(this)
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
-        LOGGER.info(
-            """
-            / ============================== \
-            |          [KOTLOUDRON]          |
-            | ------------------------------ |
-            |           SETUP START          |
-            \ ============================== /
-            """.trimIndent()
-        )
-        LOGGER.info(
-            """
-            / ============================== \
-            |          [KOTLOUDRON]          |
-            | ------------------------------ |
-            |         SETUP COMPLETE         |
-            \ ============================== /
-            """.trimIndent()
-        )
+      LOGGER.info(desingLogging("SETUP STARTING"))
+
+      LOGGER.info(desingLogging("SETUP COMPLETE"))
     }
     private fun setupComplete(event: FMLLoadCompleteEvent) {}
 
     @SubscribeEvent
-    fun setupClient(event: FMLClientSetupEvent?) {
-        LOGGER.info(
-                """
-                / ============================== \
-                |          [KOTLOUDRON]          |
-                | ------------------------------ |
-                |      START CLIENT SETUP...     |
-                \ ============================== /
-                """.trimIndent()
-            )
-
-            forgeBus.register(KeyBinds)
-            forgeBus.register(ClientEvents)
-            forgeBus.register(ScreenEvents)
-
-            forgeBus.addListener(ScreenEvents::onGuiOpen)
-            forgeBus.addListener(ScreenEvents::onNpcToolGuiOpen)
-            forgeBus.addListener(ScreenEvents::onNPCCreatorGuiOpen)
-
-            initKeys()
-
-            LOGGER.info(
-                """
-                / ============================== \
-                |          [KOTLOUDRON]          |
-                | ------------------------------ |
-                |      CLIENT SETUP COMPLETE     |
-                \ ============================== /
-                """.trimIndent()
-            )
-    }
+    fun setupClient(event: FMLClientSetupEvent?) {}
 
     @SubscribeEvent
     fun startServer(event: ServerStartingEvent?) {
-        LOGGER.info(
-                """
-                / ============================== \
-                |          [KOTLOUDRON]          |
-                | ------------------------------ |
-                |         SERVER STARTING        |
-                \ ============================== /
-                """.trimIndent()
-        )
+        LOGGER.info(desingLogging("SERVER IS STARTING"))
     }
 
     companion object {

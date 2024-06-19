@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "he_addon:block/kotloudron"
+      "model": "kotloudron:block/kotloudron"
     }
   }
 }

@@ -14,6 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.loading.FMLPaths
 import ru.benos.kotloudron.Kotloudron
 import ru.benos.kotloudron.Kotloudron.Companion.MODID
+import ru.benos.kotloudron.utils.DesingLogging.desingLogging
 import ru.benos.kotloudron.utils.HelperPack.lang
 import ru.hollowhorizon.hc.client.imgui.ImGuiMethods.window
 import ru.hollowhorizon.hc.client.imgui.ImguiHandler
@@ -53,24 +54,28 @@ object Config : HollowScreen() {
 
   private var categories = arrayOf(""); private var categories_select = ImInt(0)
 
-  public override fun init() {
-    if(!fileConfig.exists()) {
-      generateConfig()
-      Kotloudron.LOGGER.warn("[Kotloudron] Config file not found. Generated now!")
-    } else {
-      Kotloudron.LOGGER.debug("[Kotloudron] Config file exists.")
-    }
-
+  override fun init() {
     categories = arrayOf(
-    lang("gui.config.category.none"),
-    lang("gui.config.category.client"),
-    lang("gui.config.category.common"),
-    lang("gui.config.category.jokes"),
-    lang("gui.config.category.other"),
-  )
+      lang("gui.config.category.none"),
+      lang("gui.config.category.client"),
+      lang("gui.config.category.common"),
+      lang("gui.config.category.jokes"),
+      lang("gui.config.category.other"),
+    )
+
+    configInit()
   }
 
-  fun generateConfig() {
+  fun configInit() {
+    if(!fileConfig.exists()) {
+      generateConfig()
+      Kotloudron.LOGGER.warn(desingLogging("CONFIG FILE NOT FOUND. GENERATED NOW"))
+    } else {
+      Kotloudron.LOGGER.debug(desingLogging("CONFIG FILE EXISTS"))
+    }
+  }
+
+  private fun generateConfig() {
     try {
       val confBool = LinkedHashMap<String, Boolean>()
 
@@ -82,32 +87,15 @@ object Config : HollowScreen() {
 
       val result = gsonBuild.toJson(confBool)
       FileWriter(fileConfig).use { writed -> writed.write(result) }
-      Kotloudron.LOGGER.debug(
-        """
-        / ============================================================================================= \
-        | CONFIG DEBUGING
-        | --------------------------------------------------------------------------------------------- |
-        | Config '${fileConfig.name}' create to path: [${fileConfig.path}]
-        \ ============================================================================================= /
-      """.trimIndent()
-      )
+      Kotloudron.LOGGER.debug(desingLogging("CONFIG FILE '${fileConfig.name}' GENERATE TO PATH '${fileConfig.path}'"))
     } catch(e: Exception) {
-      Kotloudron.LOGGER.error(
-        """
-        / ===============================================================
-        | CONFIG DEBIGING
-        | ---------------------------------------------------------------
-        | Config generate has FAILED!!!
-        | ---------------------------------------------------------------
-        | ERROR GENERAGET CONFIG.
-        | LOG: ${e.printStackTrace()}
-        \ ===============================================================
-        """.trimIndent()
-      )
+      Kotloudron.LOGGER.error(desingLogging("GENERATE CONFIG HAS FAILED. ERROR GENERATE CONFIG. LOG: ${e.printStackTrace()}"))
     }
   }
 
   private fun setConfig(config: String, value: Any) {
+    configInit()
+
     val jsonObj = JsonParser.parseReader(FileReader(fileConfig)).asJsonObject
 
     when(value) {

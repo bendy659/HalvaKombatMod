@@ -1,5 +1,6 @@
 {
   "mod_name": "Kotloudron",
+  "itemGroup.kotloudron_tab": "Kotloudron",
 
   "kotloudron.keybinds": "Keybinds",
   "key.categories.kotloudron.keys": "HollowEngine | ADDONS - Keys",
@@ -77,5 +78,8 @@
   "kotloudron.gui.theme_select.button.edit_desc": "Edit this theme",
   "kotloudron.gui.theme_select.button.reload_desc": "Reload themes",
   "kotloudron.gui.theme_select.button.delete_desc": "Delete this theme",
-  "kotloudron.gui.theme_select.button.close_desc": "Close"
+  "kotloudron.gui.theme_select.button.close_desc": "Close",
+
+  "kotloudron.blocks": "Kotloudron blocks",
+  "block.kotloudron.kotloudron": "Block logo Kotloudron"
 }
