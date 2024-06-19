@@ -1,7 +1,8 @@
 {
   "variants": {
-    "": {
-      "model": "he_addon:block/kotloudron"
-    }
+    "facing=north": {"model": "kotloudron:block/kotloudron"},
+    "facing=south": {"model": "kotloudron:block/kotloudron", "y": 180},
+    "facing=west": {"model": "kotloudron:block/kotloudron", "y": 270},
+    "facing=east": {"model": "kotloudron:block/kotloudron", "y": 90}
   }
 }

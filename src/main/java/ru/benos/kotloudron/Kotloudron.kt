@@ -14,66 +14,63 @@ import ru.benos.kotloudron.KeyBinds.initKeys
 import ru.benos.kotloudron.events.ClientEvents
 import ru.benos.kotloudron.events.ScreenEvents
 import ru.benos.kotloudron.gui.Config
-import ru.benos.kotloudron.gui.Config.fileConfig
-import ru.benos.kotloudron.gui.Config.generateConfig
+import ru.benos.kotloudron.gui.theme.ThemeData
 import ru.benos.kotloudron.registries.KotloudronRegistries
+import ru.benos.kotloudron.utils.DesingLogging.desingLogging
 
 @Mod(Kotloudron.MODID)
 class Kotloudron {
-    companion object {
-        const val MODID: String = "kotloudron"
-        val LOGGER: Logger = LogUtils.getLogger()
-    }
+    val forgeBus = MinecraftForge.EVENT_BUS
+    val modBus = thedarkcolour.kotlinforforge.forge.MOD_BUS
 
     init {
-        val forgeBus = MinecraftForge.EVENT_BUS
-        val modBus = thedarkcolour.kotlinforforge.forge.MOD_BUS
+      LOGGER.info(desingLogging("STARTING INSTALL"))
 
-        LOGGER.info("'[Kotloudron]' loading...")
+      forgeBus.register(Config)
+      forgeBus.register(ThemeData)
+      ThemeData.init()
+      forgeBus.register(KotloudronRegistries)
+      KotloudronRegistries.init()
 
-        forgeBus.register(KotloudronRegistries)
+      modBus.addListener(::setup)
+      modBus.addListener(::setupComplete)
 
-        if(!fileConfig.exists()) generateConfig()
+      if(FMLEnvironment.dist.isClient) {
+        LOGGER.info(desingLogging("CLIENT SETUP STARTING"))
 
-        modBus.addListener(::setup)
-        if(FMLEnvironment.dist.isClient) {
-            LOGGER.info("'[Kotloudron]' start loading client...")
+        forgeBus.register(KeyBinds)
+        forgeBus.register(ClientEvents)
+        forgeBus.register(ScreenEvents)
 
-            forgeBus.register(KeyBinds)
-            forgeBus.register(ClientEvents)
-            forgeBus.register(ScreenEvents)
-            forgeBus.register(Config)
+        forgeBus.addListener(ScreenEvents::onGuiOpen)
+        forgeBus.addListener(ScreenEvents::onNpcToolGuiOpen)
+        forgeBus.addListener(ScreenEvents::onNPCCreatorGuiOpen)
 
-            forgeBus.addListener(ScreenEvents::onGuiOpen)
-            forgeBus.addListener(ScreenEvents::onNpcToolGuiOpen)
-            forgeBus.addListener(ScreenEvents::onNPCCreatorGuiOpen)
+        initKeys()
 
-            initKeys()
+        LOGGER.info(desingLogging("CLIENT SETUP COMPLETE"))
+      }
 
-            LOGGER.info("'[Kotloudron]' loading client complete.")
-        }
-        KotloudronRegistries.init()
-
-        modBus.addListener(::setupComplete)
-
-        forgeBus.register(this)
-        LOGGER.info("'[Kotloudron]' loading complete.")
+      LOGGER.info(desingLogging("INSTALL COMPLETE"))
+      forgeBus.register(this)
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
-        LOGGER.info("[Kotloudron] Start common setup...")
-        LOGGER.info("[Kotloudron] Common setup completed.")
+      LOGGER.info(desingLogging("SETUP STARTING"))
+      LOGGER.info(desingLogging("SETUP COMPLETE"))
     }
     private fun setupComplete(event: FMLLoadCompleteEvent) {}
 
     @SubscribeEvent
-    fun setupClient(event: FMLClientSetupEvent?) {
-        LOGGER.info("[Kotloudron] Starting client setup...")
-        LOGGER.info("[Kotloudron] Client setup completed.")
-    }
+    fun setupClient(event: FMLClientSetupEvent?) {}
 
     @SubscribeEvent
     fun startServer(event: ServerStartingEvent?) {
-        LOGGER.info("[Kotloudron] Server is starting.")
+        LOGGER.info(desingLogging("SERVER IS STARTING"))
+    }
+
+    companion object {
+        const val MODID: String = "kotloudron"
+        val LOGGER: Logger = LogUtils.getLogger()
     }
 }

@@ -3,6 +3,7 @@ package ru.benos.kotloudron.gui
 import com.mojang.blaze3d.vertex.PoseStack
 import imgui.ImGui
 import net.minecraft.client.Minecraft
+import ru.benos.kotloudron.Kotloudron.Companion.MODID
 import ru.benos.kotloudron.gui.Config.getConfig
 import ru.benos.kotloudron.utils.HelperPack.lang
 import ru.benos.kotloudron.utils.HelperPack.showInfo
@@ -78,7 +79,7 @@ class NPCToolGUI(val npc: NPCEntity) : HollowScreen() {
     val config = getConfig("npcToolMenu_newIcons")
     val isClicked =
       if(config is Boolean && !config)  ImGui.imageButton("hollowengine:textures/gui/icons/$icon.png".rl.toTexture().id, size, size)
-      else ImGui.imageButton("he_addon:textures/gui/npc_tool/$icon.png".rl.toTexture().id, size, size)
+      else ImGui.imageButton("$MODID:textures/gui/npc_tool/$icon.png".rl.toTexture().id, size, size)
 
     if (ImGui.isItemHovered()) ImGui.setTooltip(desc)
     return isClicked

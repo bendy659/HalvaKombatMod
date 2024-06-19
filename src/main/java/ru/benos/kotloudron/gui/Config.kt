@@ -10,9 +10,12 @@ import imgui.flag.ImGuiStyleVar
 import imgui.flag.ImGuiWindowFlags
 import imgui.type.ImBoolean
 import imgui.type.ImInt
+import net.minecraftforge.eventbus.api.Event
+import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.loading.FMLPaths
 import ru.benos.kotloudron.Kotloudron
 import ru.benos.kotloudron.Kotloudron.Companion.MODID
+import ru.benos.kotloudron.utils.DesingLogging.desingLogging
 import ru.benos.kotloudron.utils.HelperPack.lang
 import ru.hollowhorizon.hc.client.imgui.ImGuiMethods.window
 import ru.hollowhorizon.hc.client.imgui.ImguiHandler
@@ -22,9 +25,10 @@ import java.io.FileReader
 import java.io.FileWriter
 
 // Зачем нам обычный конфиг, когда можно создать свой)))
-object Config : HollowScreen() {
+object Config: HollowScreen() {
   private val CONFIGDIR = FMLPaths.GAMEDIR.get().resolve("config").toFile()
-  val fileConfig = File(CONFIGDIR, "$MODID.json")
+  val fileConfig = File(CONFIGDIR, "$MODID-config.json")
+
   private var openOldMenu = ImBoolean().apply {
     val check = getConfig("openOldGUI")
 
@@ -52,17 +56,27 @@ object Config : HollowScreen() {
 
   private var categories = arrayOf(""); private var categories_select = ImInt(0)
 
-  public override fun init() {
+  init {
+
+
     categories = arrayOf(
-    lang("gui.config.category.none"),
-    lang("gui.config.category.client"),
-    lang("gui.config.category.common"),
-    lang("gui.config.category.jokes"),
-    lang("gui.config.category.other"),
-  )
+      lang("gui.config.category.none"),
+      lang("gui.config.category.client"),
+      lang("gui.config.category.common"),
+      lang("gui.config.category.jokes"),
+      lang("gui.config.category.other"),
+    )
   }
 
-  fun generateConfig() {
+  fun configExists(): Boolean {
+    if(!fileConfig.exists()) {
+      try { generateConfig() } catch (e: Exception) { throw e }; return false
+    } else {
+      Kotloudron.LOGGER.debug(desingLogging("CONFIG FILE EXISTS")); return true
+    }
+  }
+
+  private fun generateConfig() {
     val confBool = LinkedHashMap<String, Boolean>()
 
     val gsonBuild = GsonBuilder().setPrettyPrinting().create()
@@ -73,13 +87,14 @@ object Config : HollowScreen() {
 
     val result = gsonBuild.toJson(confBool)
     FileWriter(fileConfig).use { writed -> writed.write(result) }
-    Kotloudron.LOGGER.warn("Config file not found. Generated now!")
+    Kotloudron.LOGGER.debug(desingLogging("CONFIG FILE '${fileConfig.name}' GENERATE TO PATH 'config/${fileConfig.name}'"))
+    Kotloudron.LOGGER.warn(desingLogging("CONFIG FILE NOT FOUND. GENERATED NOW"))
   }
 
   private fun setConfig(config: String, value: Any) {
     val jsonObj = JsonParser.parseReader(FileReader(fileConfig)).asJsonObject
 
-    when(value) {
+    when (value) {
       is String -> jsonObj.addProperty(config, value)
       is Int -> jsonObj.addProperty(config, value)
       is Boolean -> jsonObj.addProperty(config, value)
@@ -91,7 +106,7 @@ object Config : HollowScreen() {
   fun getConfig(config: String): Any? {
     val jsonElement = Gson().fromJson(FileReader(fileConfig), JsonObject::class.java).get(config)
 
-    if(jsonElement == null) return null
+    if (jsonElement == null) return null
     else return when {
       jsonElement.isJsonPrimitive -> {
         val jsonPrimitive = jsonElement.asJsonPrimitive

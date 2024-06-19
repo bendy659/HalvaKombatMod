@@ -3,7 +3,7 @@
   "parent": "block/side",
   "texture_size": [64, 64],
   "textures": {
-    "2": "he_addon:all/kotloudron"
+    "2": "kotloudron:all/kotloudron"
   },
   "elements": [
     {

@@ -1,7 +1,7 @@
 modLoader = "kotlinforforge"
 loaderVersion = "[3,)"
 license = "MIT License"
-logoFile= "../kotloudron-logo.png"
+logoFile= "kotloudron_logo.png"
 authors="_BENDY659_"
 credits="Small boobs :("
 
