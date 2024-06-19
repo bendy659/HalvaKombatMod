@@ -27,7 +27,6 @@ class Kotloudron {
       LOGGER.info(desingLogging("STARTING INSTALL"))
 
       forgeBus.register(Config)
-      Config.init()
       forgeBus.register(ThemeData)
       ThemeData.init()
       forgeBus.register(KotloudronRegistries)

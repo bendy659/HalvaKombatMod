@@ -17,8 +17,14 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class BlockKotloudron: Block(Properties.of(Material.METAL).destroyTime(40f).noOcclusion()) {
-	val BLOCK_FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+class BlockKotloudron: Block(
+	Properties.of(Material.METAL)
+		.destroyTime(40f)
+		.noOcclusion()
+) {
+	companion object {
+		val BLOCK_FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+	}
 
 	fun init() {
 		registerDefaultState(this.stateDefinition.any().setValue(BLOCK_FACING, Direction.NORTH))

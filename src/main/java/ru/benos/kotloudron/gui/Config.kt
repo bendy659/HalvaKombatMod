@@ -56,7 +56,9 @@ object Config: HollowScreen() {
 
   private var categories = arrayOf(""); private var categories_select = ImInt(0)
 
-  public override fun init() {
+  init {
+
+
     categories = arrayOf(
       lang("gui.config.category.none"),
       lang("gui.config.category.client"),
@@ -90,40 +92,33 @@ object Config: HollowScreen() {
   }
 
   private fun setConfig(config: String, value: Any) {
-    if(configExists()) {
-      val jsonObj = JsonParser.parseReader(FileReader(fileConfig)).asJsonObject
+    val jsonObj = JsonParser.parseReader(FileReader(fileConfig)).asJsonObject
 
-      when (value) {
-        is String -> jsonObj.addProperty(config, value)
-        is Int -> jsonObj.addProperty(config, value)
-        is Boolean -> jsonObj.addProperty(config, value)
-        else -> throw IllegalArgumentException("Unknown value type: ${value.javaClass.name}")
-      }
-      val result = GsonBuilder().setPrettyPrinting().create().toJson(jsonObj)
-      FileWriter(fileConfig).use { writer -> writer.write(result) }
-    } else error(desingLogging("UPDATE CONFIG HAS FAILDE. CONFIG FILE NOT FOUND"))
+    when (value) {
+      is String -> jsonObj.addProperty(config, value)
+      is Int -> jsonObj.addProperty(config, value)
+      is Boolean -> jsonObj.addProperty(config, value)
+      else -> throw IllegalArgumentException("Unknown value type: ${value.javaClass.name}")
+    }
+    val result = GsonBuilder().setPrettyPrinting().create().toJson(jsonObj)
+    FileWriter(fileConfig).use { writer -> writer.write(result) }
   }
   fun getConfig(config: String): Any? {
-    if(configExists()) {
-      val jsonElement = Gson().fromJson(FileReader(fileConfig), JsonObject::class.java).get(config)
+    val jsonElement = Gson().fromJson(FileReader(fileConfig), JsonObject::class.java).get(config)
 
-      if (jsonElement == null) return null
-      else return when {
-        jsonElement.isJsonPrimitive -> {
-          val jsonPrimitive = jsonElement.asJsonPrimitive
+    if (jsonElement == null) return null
+    else return when {
+      jsonElement.isJsonPrimitive -> {
+        val jsonPrimitive = jsonElement.asJsonPrimitive
 
-          when {
-            jsonPrimitive.isBoolean -> jsonPrimitive.asBoolean
-            jsonPrimitive.isString -> jsonPrimitive.asString
-            jsonPrimitive.isNumber -> jsonPrimitive.asNumber
-            else -> null
-          }
+        when {
+          jsonPrimitive.isBoolean -> jsonPrimitive.asBoolean
+          jsonPrimitive.isString -> jsonPrimitive.asString
+          jsonPrimitive.isNumber -> jsonPrimitive.asNumber
+          else -> null
         }
-
-        else -> null
       }
-    } else {
-      error(desingLogging("GET DATA FROM CONFIG HAS FAILED. CONFIG FILE NOT FOUND"))
+      else -> null
     }
   }
 

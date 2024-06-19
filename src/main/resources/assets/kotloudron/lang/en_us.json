@@ -81,5 +81,9 @@
   "kotloudron.gui.theme_select.button.close_desc": "Close",
 
   "kotloudron.blocks": "Kotloudron blocks",
-  "block.kotloudron.kotloudron": "Block logo Kotloudron"
+  "block.kotloudron.kotloudron": "Block logo Kotloudron",
+
+  "kotloudron.items": "Kotloudron items",
+  "item.kotloudron.kotloudronium_sword": "Kotloudronium sword",
+  "item.kotloudron.kotloudronium_sword_lore": "Max power of Kotlin language code!"
 }
