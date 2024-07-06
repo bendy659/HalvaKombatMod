@@ -7,9 +7,6 @@ import net.minecraftforge.client.event.ScreenEvent
 import net.minecraftforge.event.TickEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import ru.benos.kotloudron.Kotloudron
-import ru.benos.kotloudron.gui.Config.getConfig
-import ru.benos.kotloudron.gui.NPCToolGUI
-import ru.benos.kotloudron.gui.HEAddon_NPCCreatorGUI
 import ru.hollowhorizon.hollowengine.client.gui.NPCCreatorGui
 import ru.hollowhorizon.hollowengine.client.gui.NPCToolGui
 
@@ -39,7 +36,7 @@ object ScreenEvents {
 
       if (screen is NPCToolGui) {
         Kotloudron.LOGGER.debug("Ths NPCToolGui open")
-        Minecraft.getInstance().setScreen(NPCToolGUI(screen.npc))
+        //Minecraft.getInstance().setScreen(NPCToolGUI(screen.npc))
         this.npcCreatorGuiOpenThisNpcToolGui = true
       } else npcCreatorGuiOpenThisNpcToolGui = false
     }
@@ -48,11 +45,11 @@ object ScreenEvents {
   @SubscribeEvent
   fun onNPCCreatorGuiOpen(e: TickEvent.ClientTickEvent) {
       val screen = Minecraft.getInstance().screen
-      val config = getConfig("openOldMenu")
+      val config = /*getConfig("openOldMenu")*/ false
 
       if(screen is NPCCreatorGui) {
-        if(!npcCreatorGuiOpenThisNpcToolGui && config is Boolean && !config)
-          Minecraft.getInstance().setScreen(HEAddon_NPCCreatorGUI(screen.npc, screen.npc.id, false))
+        if(!npcCreatorGuiOpenThisNpcToolGui && config is Boolean && !config) {}
+          //Minecraft.getInstance().setScreen(HEAddon_NPCCreatorGUI(screen.npc, screen.npc.id, false))
 
         Kotloudron.LOGGER.debug("Open old 'NPCCreator' menu: $config")
       }

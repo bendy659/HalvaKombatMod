@@ -11,11 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent
 import net.minecraftforge.fml.loading.FMLEnvironment
 import org.slf4j.Logger
 import ru.benos.kotloudron.KeyBinds.initKeys
-import ru.benos.kotloudron.events.ClientEvents
 import ru.benos.kotloudron.events.ScreenEvents
-import ru.benos.kotloudron.gui.Config
-import ru.benos.kotloudron.gui.theme.ThemeData
-import ru.benos.kotloudron.registries.KotloudronRegistries
 import ru.benos.kotloudron.utils.DesingLogging.desingLogging
 
 @Mod(Kotloudron.MODID)
@@ -26,12 +22,6 @@ class Kotloudron {
     init {
       LOGGER.info(desingLogging("STARTING INSTALL"))
 
-      forgeBus.register(Config)
-      forgeBus.register(ThemeData)
-      ThemeData.init()
-      forgeBus.register(KotloudronRegistries)
-      KotloudronRegistries.init()
-
       modBus.addListener(::setup)
       modBus.addListener(::setupComplete)
 
@@ -39,7 +29,6 @@ class Kotloudron {
         LOGGER.info(desingLogging("CLIENT SETUP STARTING"))
 
         forgeBus.register(KeyBinds)
-        forgeBus.register(ClientEvents)
         forgeBus.register(ScreenEvents)
 
         forgeBus.addListener(ScreenEvents::onGuiOpen)
