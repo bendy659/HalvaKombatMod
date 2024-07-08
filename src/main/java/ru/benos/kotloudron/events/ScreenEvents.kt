@@ -51,7 +51,7 @@ object ScreenEvents {
         if(!npcCreatorGuiOpenThisNpcToolGui && config is Boolean && !config) {}
           //Minecraft.getInstance().setScreen(HEAddon_NPCCreatorGUI(screen.npc, screen.npc.id, false))
 
-        Kotloudron.LOGGER.debug("Open old 'NPCCreator' menu: $config")
+        //Kotloudron.LOGGER.debug("Open old 'NPCCreator' menu: $config")
       }
   }
 }

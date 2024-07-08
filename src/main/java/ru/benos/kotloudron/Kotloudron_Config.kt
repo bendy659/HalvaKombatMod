@@ -1,3 +1,8 @@
 package ru.benos.kotloudron
 
-object Kotloudron_Config {} // Not configs :D
+import ru.hollowhorizon.hc.client.screens.HollowScreen
+
+// Custom config
+object Kotloudron_Config: HollowScreen() {
+
+}
