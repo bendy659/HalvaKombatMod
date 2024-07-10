@@ -1,6 +1,9 @@
 Waiting to 'HollowEngine 1.20.X'...
 ---------------------------------------------------------------
 
+> 0.3 - Alpha:
+  - Reformating
+
 > 0.2 – Alpha:
   - Change modID 'he_addon' => 'kotloudron' and title 'HollowEngine | ADDON' => 'Kotloudron'.
   - Recreated 'NPC Creator GUI' and 'NPC Tool GUI' menus.

@@ -7,6 +7,7 @@ import net.minecraftforge.client.event.ScreenEvent
 import net.minecraftforge.event.TickEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import ru.benos.kotloudron.Kotloudron
+import ru.benos.kotloudron.guis.NpcToolGui
 import ru.hollowhorizon.hollowengine.client.gui.NPCCreatorGui
 import ru.hollowhorizon.hollowengine.client.gui.NPCToolGui
 
@@ -35,8 +36,8 @@ object ScreenEvents {
       val screen = Minecraft.getInstance().screen
 
       if (screen is NPCToolGui) {
-        Kotloudron.LOGGER.debug("Ths NPCToolGui open")
-        //Minecraft.getInstance().setScreen(NPCToolGUI(screen.npc))
+        if(Kotloudron.debug) Kotloudron.LOGGER.debug("Ths NPCToolGui open")
+        Minecraft.getInstance().setScreen(NpcToolGui(screen.npc))
         this.npcCreatorGuiOpenThisNpcToolGui = true
       } else npcCreatorGuiOpenThisNpcToolGui = false
     }

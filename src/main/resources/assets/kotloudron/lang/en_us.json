@@ -1,3 +1,17 @@
 {
+  "Mod": "Kotloudron",
 
+  "Gui-Npc Tool": "Gui translate",
+  "gui.kotloudron.npc_tool.title": "NPC setting",
+  "gui.kotloudron.npc_tool.npc_edit.name": "NPC Editing",
+  "gui.kotloudron.npc_tool.npc_edit.desc": "NaN Desc",
+  "gui.kotloudron.npc_tool.npc_nodes.name": "NPC Node editor",
+  "gui.kotloudron.npc_tool.npc_nodes.desc": "NaN Desc",
+  "gui.kotloudron.npc_tool.npc_poses.name": "NPC Posing",
+  "gui.kotloudron.npc_tool.npc_poses.desc": "NaN Desc",
+  "gui.kotloudron.npc_tool.config.name": "Kotloudron config",
+  "gui.kotloudron.npc_tool.config.desc": "This config (lol)",
+
+  "Gui-NpcCreate": "Gui translate",
+  "gui.kotloudron.npc_create.npc_name": "Имя"
 }

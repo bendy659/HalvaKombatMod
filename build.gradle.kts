@@ -65,8 +65,8 @@ configure<UserDevExtension> {
       )
     //jvmArg("-XX:+AllowEnhancedClassRedefinition")
     arg("-mixin.config=$mod_id.mixins.json")
-      mods.create(mod_id) {
-        source(the<JavaPluginExtension>().sourceSets.getByName("main"))
+    mods.create(mod_id) {
+      source(the<JavaPluginExtension>().sourceSets.getByName("main"))
     }
   }
 
