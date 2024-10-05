@@ -1,6 +1,7 @@
 import net.minecraftforge.gradle.common.util.RunConfig
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import net.minecraftforge.gradle.userdev.UserDevExtension
+import org.gradle.api.file.FileCollection
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.spongepowered.asm.gradle.plugins.MixinExtension
 import java.time.ZonedDateTime
@@ -85,8 +86,9 @@ repositories {
   maven("https://jitpack.io")
   maven("https://cursemaven.com")
   maven("https://thedarkcolour.github.io/KotlinForForge/")
-  flatDir { dir("libs") }
-  flatDir{ dir("source") }
+  /*maven("https://maven.0mods.team/releases")*/
+
+  flatDir{ dirs(rootDir.resolve("source")) }
 }
 
 val shadow = configurations["shadow"]
@@ -98,18 +100,23 @@ configurations {
 }
 
 dependencies {
-  val minecraft = configurations["minecraft"]
   minecraft("net.minecraftforge:forge:$minecraft_version-$forge_version")
 
   annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
   implementation("thedarkcolour:kotlinforforge:3.12.0")
-  //implementation(fg.deobf("thedarkcolour:kotlinforforge:3.12.0-all"))
-  //implementation(fg.deobf("ru.hollowhorizon:hollowengine:$minecraft_version-1.6.0aaa"))
-  //implementation(fg.deobf("ru.hollowhorizon:hc:$minecraft_version-1.6.2"))
-  implementation(fg.deobf("ru.hollowhorizon:hollowengine:$minecraft_version-1.5.4"))
+  implementation(fg.deobf("ru.hollowhorizon:hollowengine:$minecraft_version-1.6.2a"))
   implementation(fg.deobf("ru.hollowhorizon:hc:$minecraft_version-1.6.3"))
-  implementation(fg.deobf("ru.hollowhorizon:kotlinscript:1.3"))
+  implementation(fg.deobf("ru.hollowhorizon:kotlinscript:1.4"))
+/*
+  minecraftLibrary("com.akuleshov7:ktoml-core-jvm:0.5.1")
+  minecraftLibrary("team.0mods:imgui-app:$imguiVersion")
+  minecraftLibrary("team.0mods:imgui-binding:$imguiVersion")
+  minecraftLibrary("team.0mods:imgui-lwjgl3:$imguiVersion")
+  minecraftLibrary("team.0mods:imgui-binding-natives:$imguiVersion")
+  minecraftLibrary("com.tianscar.imageio:imageio-apng:1.0.1")
+  minecraftLibrary("org.joml:joml:1.10.8")
+*/
 }
 
 fun Jar.createManifest() = manifest {
@@ -144,7 +151,8 @@ val jar = tasks.named<Jar>("jar") {
 val shadowJar = tasks.named<ShadowJar>("shadowJar") {
   archiveClassifier.set("")
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-  configurations = listOf(shadow)
+  /*configurations = listOf(shadow)*/
+  configurations = listOf(shadow) as List<FileCollection?>?
 
   exclude(
       "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**",

@@ -4,6 +4,6 @@
     "facing=south": {"model": "kotloudron:block/plush_bendy659_", "y": 180},
     "facing=east": {"model": "kotloudron:block/plush_bendy659_", "y": 90},
     "facing=west": {"model": "kotloudron:block/plush_bendy659_", "y":  270},
-    "": {"model": "kotloudron:block/plush_bendy659_.gltf"}
+    "": {"model": "kotloudron:block/plush_bendy659_"}
   }
 }

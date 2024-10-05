@@ -13,5 +13,7 @@
   "gui.kotloudron.npc_tool.config.desc": "This config (lol)",
 
   "Gui-NpcCreate": "Gui translate",
-  "gui.kotloudron.npc_create.npc_name": "Имя"
+  "gui.kotloudron.npc_create.npc_name": "Имя",
+
+  "item.kotloudron.phone": "Smartphone"
 }

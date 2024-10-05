@@ -8,6 +8,7 @@ import ru.benos.kotloudron.blocks.KotloudronBlock
 import ru.benos.kotloudron.blocks.PlushMeBlock
 import ru.benos.kotloudron.blocks.PlushMeBlockEntity
 import ru.benos.kotloudron.items.KotloudroniumSword
+import ru.benos.kotloudron.items.Phone
 import ru.benos.kotloudron.items.PlushMeBlockItem
 import ru.benos.kotloudron.utils.DesingLogging.desingLogging
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -26,6 +27,8 @@ object KotloudronRegistries {
   val plusMeBlockEntity = BLOCK_ENTITIES.register("plush_bendy659_") {
     BlockEntityType.Builder.of(::PlushMeBlockEntity, plushMeBlock.get()).build(null)
   }
+
+  val PHONE = ITEMS.register("phone", ::Phone)
 
   fun init() {
     ITEMS.register(MOD_BUS)
