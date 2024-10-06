@@ -108,15 +108,6 @@ dependencies {
   implementation(fg.deobf("ru.hollowhorizon:hollowengine:$minecraft_version-1.6.2a"))
   implementation(fg.deobf("ru.hollowhorizon:hc:$minecraft_version-1.6.3"))
   implementation(fg.deobf("ru.hollowhorizon:kotlinscript:1.4"))
-/*
-  minecraftLibrary("com.akuleshov7:ktoml-core-jvm:0.5.1")
-  minecraftLibrary("team.0mods:imgui-app:$imguiVersion")
-  minecraftLibrary("team.0mods:imgui-binding:$imguiVersion")
-  minecraftLibrary("team.0mods:imgui-lwjgl3:$imguiVersion")
-  minecraftLibrary("team.0mods:imgui-binding-natives:$imguiVersion")
-  minecraftLibrary("com.tianscar.imageio:imageio-apng:1.0.1")
-  minecraftLibrary("org.joml:joml:1.10.8")
-*/
 }
 
 fun Jar.createManifest() = manifest {
