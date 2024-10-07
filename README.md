@@ -1,16 +1,17 @@
-# [+] KOTLOUDRON [+]
+<div align="center">
+
+# |---[ HalvaKombat ]---|
 
 ---
 
-## 🪄 This is - a tiny mod that may be developed in the future.
+</div>
 
-### ⚙️ Now, not so much has been implemented in fashion, namely:
+<div align="center" style="color: #ffffff; background: linear-gradient(45deg, rgba(168,99,0,1) 30%, rgba(255,187,57,1) 70%); font-size: 24px; margin: 10px; padding: 10px; border-color: #b89128; border-width: 10px; border-radius: 1rem">
 
-- New menus for 'NPC Creator' and 'NPC Tool',
-- Theme selector and editor for Menus.
+<h1> Ещё не устали тапать своего хомячка? </h1>
 
-### __***Attention***__: Do not treat the project as something __serious__!
 ---
 
-# 🔧 WORK IN PROGRESS...
-# 📥 [0000000000] --% | Freezing.
+<h3> Тогда этот мод для вас! </h3>
+
+</div>

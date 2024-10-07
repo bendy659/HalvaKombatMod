@@ -1,7 +1,7 @@
 |=============================================================================================|
 |                         Copyright (C) 2024 [_BENDY659_] [null]                              |
 |                                                                                             |
-|               This license Covers the Full project [HollowEngine | ADDON]                   |
+|                          This license Covers the Full project                               |
 |                                                                                             |
 | This project:                                                                               |
 | - Cannot be used for commercial Uses                                                        |
