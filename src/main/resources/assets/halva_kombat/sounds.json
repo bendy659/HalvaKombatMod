@@ -1,0 +1,18 @@
+{
+	"gui.coin_click": {
+		"category": "player",
+		"sounds": [ "halva_kombat:coin_click" ]
+	},
+	"gui.upgrade_point": {
+		"category": "player",
+		"sounds": [ "halva_kombat:upgrade_point" ]
+	},
+	"gui.500k_moneys": {
+		"category": "player",
+		"sounds": [ "halva_kombat:500k_moneys" ]
+	},
+	"gui.2m_money": {
+		"category": "player",
+		"sounds": [ "halva_kombat:2m_moneys" ]
+	}
+}

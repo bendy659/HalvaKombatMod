@@ -105,7 +105,6 @@ dependencies {
   annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
   implementation("thedarkcolour:kotlinforforge:3.12.0")
-  implementation(fg.deobf("ru.hollowhorizon:hollowengine:$minecraft_version-1.6.2a"))
   implementation(fg.deobf("ru.hollowhorizon:hc:$minecraft_version-1.6.3"))
   implementation(fg.deobf("ru.hollowhorizon:kotlinscript:1.4"))
 }
@@ -126,7 +125,7 @@ fun Jar.createManifest() = manifest {
 }
 
 configure<MixinExtension> {
-  add(sourceSets.main.get(), "kotloudron.refmap.json")
+  add(sourceSets.main.get(), "$mod_id.refmap.json")
 }
 
 val jar = tasks.named<Jar>("jar") {
