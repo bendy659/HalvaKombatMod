@@ -14,5 +14,13 @@
 	"gui.2m_money": {
 		"category": "player",
 		"sounds": [ "halva_kombat:2m_moneys" ]
+	},
+	"gui.coin_drop": {
+		"category": "player",
+		"sounds": [ "halva_kombat:coin_drop" ]
+	},
+	"gui.buy": {
+		"category": "player",
+		"sounds": [ "halva_kombat:buy" ]
 	}
 }

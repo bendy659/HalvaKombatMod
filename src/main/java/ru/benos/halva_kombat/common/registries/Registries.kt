@@ -21,6 +21,8 @@ object Registries {
   val UPGRADE_POINT = SOUNDS.register("upgrade_point") { SoundEvent(ResourceLocation(MOD_ID, "gui.upgrade_point")) }
   val MONEYS_500K = SOUNDS.register("500k_money") { SoundEvent(ResourceLocation(MOD_ID, "gui.500k_money")) }
   val MONEYS_2M = SOUNDS.register("2m_money") { SoundEvent(ResourceLocation(MOD_ID, "gui.2m_money")) }
+  val DROP_COIN = SOUNDS.register("drop_coin") { SoundEvent(ResourceLocation(MOD_ID, "gui.coin_drop")) }
+  val BUY = SOUNDS.register(("buy")) { SoundEvent(ResourceLocation(MOD_ID, "gui.buy")) }
 
   fun init() {
     ITEMS.register(MOD_BUS)
