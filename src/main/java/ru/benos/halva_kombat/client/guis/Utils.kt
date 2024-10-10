@@ -68,7 +68,7 @@ object Utils {
 
   fun getRealTime24hFormat(): Pair<Long, Long> {
     val tickTime = ServerLifecycleHooks.getCurrentServer().worldData.overworldData().dayTime % 24000
-    val hours = (tickTime / 1000) % 24
+    val hours = (tickTime / 1000 + 6) % 24
     val minutes = (tickTime % 1000) * 60 / 1000
 
     return hours to minutes

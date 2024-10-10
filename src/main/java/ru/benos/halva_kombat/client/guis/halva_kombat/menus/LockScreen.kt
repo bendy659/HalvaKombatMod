@@ -9,7 +9,7 @@ import ru.hollowhorizon.hc.client.imgui.ImguiHandler.FONTS
 import ru.hollowhorizon.hc.client.utils.rl
 import ru.hollowhorizon.hc.client.utils.toTexture
 
-object BlockScreen {
+object LockScreen {
   fun onLockScreen(): Boolean {
     ImGui.beginChild("lock-screen-menu", ImGui.getWindowWidth(), ImGui.getWindowHeight(), false, ImGuiWindowFlags.NoBackground)
 

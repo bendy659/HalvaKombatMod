@@ -6,6 +6,8 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.loading.FMLEnvironment
 import org.slf4j.Logger
 import ru.benos.halva_kombat.common.registries.Registries
+import ru.benos.halva_kombat.events.ScreenEvents
+import ru.benos.halva_kombat.events.ScreenEvents.onGuiClose
 import ru.benos.halva_kombat.utils.DesingLogging.desingLogging
 
 @Mod(HalvaKombat.MODID)
@@ -18,7 +20,10 @@ class HalvaKombat {
 
     forgeBus.register(Registries); Registries.init()
 
-    if (FMLEnvironment.dist.isClient) {}
+    if (FMLEnvironment.dist.isClient) {
+      forgeBus.register(ScreenEvents)
+      forgeBus.addListener(::onGuiClose)
+    }
 
     LOGGER.info(desingLogging("INSTALL COMPLETE"))
     forgeBus.register(this)
