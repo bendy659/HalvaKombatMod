@@ -7,7 +7,9 @@ import imgui.type.ImInt
 import net.minecraft.client.Minecraft
 import net.minecraft.world.entity.player.Player
 import org.lwjgl.glfw.GLFW
+import ru.benos.halva_kombat.HalvaKombat.Companion.LOGGER
 import ru.benos.halva_kombat.HalvaKombat.Companion.MODID
+import ru.benos.halva_kombat.client.guis.halva_kombat.menus.AppsMenu.appID
 import ru.benos.halva_kombat.client.guis.halva_kombat.menus.AppsMenu.onAppsMenu
 import ru.benos.halva_kombat.client.guis.halva_kombat.menus.BankMenuApp.onBankMenu
 import ru.benos.halva_kombat.client.guis.halva_kombat.menus.LockScreen.onLockScreen
@@ -53,9 +55,12 @@ class PhoneMenu(pPlayer: Player) : HollowScreen() {
       if(menuSelected == Menus.LOCK_SCREEN)
         if(onLockScreen()) menuSelected = Menus.APPS
       if(menuSelected == Menus.APPS) {
-        if(onAppsMenu().get() == 1) onGemtapMenu()
-        if(onAppsMenu().get() == 2) onBankMenu()
-        if(onAppsMenu().get() == 3) onSettingsMenu()
+        val appSelect = onAppsMenu().get()
+        if(appSelect == 1) onGemtapMenu()
+        if(appSelect == 2) onBankMenu()
+        if(appSelect == 3) onSettingsMenu()
+
+        if(appSelect != 0) LOGGER.info("New app ID: $appSelect")
       }
       ImGui.endChild()
 
@@ -89,6 +94,8 @@ class PhoneMenu(pPlayer: Player) : HollowScreen() {
       pData.dataUpgradeClickAdd = upgradeClickAdd.get()
 
       menuSelected = Menus.LOCK_SCREEN
+
+      appID.set(0)
     }
 
     return super.keyPressed(pKeyCode, pScanCode, pModifiers)
