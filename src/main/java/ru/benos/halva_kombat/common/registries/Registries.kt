@@ -17,16 +17,19 @@ object Registries {
 
   val PHONE_ITEM = ITEMS.register("phone", ::PhoneItem)
 
-  val CLICK_COIN = SOUNDS.register("click_coin") { SoundEvent(ResourceLocation(MOD_ID, "gui.coin_click")) }
-  val UPGRADE_POINT = SOUNDS.register("upgrade_point") { SoundEvent(ResourceLocation(MOD_ID, "gui.upgrade_point")) }
-  val MONEYS_500K = SOUNDS.register("500k_money") { SoundEvent(ResourceLocation(MOD_ID, "gui.500k_money")) }
-  val MONEYS_2M = SOUNDS.register("2m_money") { SoundEvent(ResourceLocation(MOD_ID, "gui.2m_money")) }
-  val DROP_COIN = SOUNDS.register("drop_coin") { SoundEvent(ResourceLocation(MOD_ID, "gui.coin_drop")) }
-  val BUY = SOUNDS.register(("buy")) { SoundEvent(ResourceLocation(MOD_ID, "gui.buy")) }
+  val CLICK_COIN = SOUNDS.register("coin_click") { SoundEvent(ResourceLocation(MOD_ID, "coin_click")) }
+  val UPGRADE_POINT = SOUNDS.register("upgrade_point") { SoundEvent(ResourceLocation(MOD_ID, "upgrade_point")) }
+  val MONEYS_500K = SOUNDS.register("500k_money") { SoundEvent(ResourceLocation(MOD_ID, "500k_money")) }
+  val MONEYS_2M = SOUNDS.register("2m_money") { SoundEvent(ResourceLocation(MOD_ID, "2m_money")) }
+  val DROP_COIN = SOUNDS.register("coin_drop") { SoundEvent(ResourceLocation(MOD_ID, "coin_drop")) }
+  val BUY = SOUNDS.register("buy") { SoundEvent(ResourceLocation(MOD_ID, "buy")) }
+  val PHONE_OFF = SOUNDS.register("phone_off") { SoundEvent(ResourceLocation(MOD_ID, "phone_off")) }
+  val PHONE_ON = SOUNDS.register("phone_on") { SoundEvent(ResourceLocation(MOD_ID, "phone_on")) }
 
   fun init() {
     ITEMS.register(MOD_BUS)
     BLOCKS.register(MOD_BUS)
     BLOCK_ENTITIES.register(MOD_BUS)
+    SOUNDS.register(MOD_BUS)
   }
 }

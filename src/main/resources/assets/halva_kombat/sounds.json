@@ -1,26 +1,34 @@
 {
-	"gui.coin_click": {
+	"coin_click": {
 		"category": "player",
 		"sounds": [ "halva_kombat:coin_click" ]
 	},
-	"gui.upgrade_point": {
+	"upgrade_point": {
 		"category": "player",
 		"sounds": [ "halva_kombat:upgrade_point" ]
 	},
-	"gui.500k_moneys": {
+	"500k_moneys": {
 		"category": "player",
 		"sounds": [ "halva_kombat:500k_moneys" ]
 	},
-	"gui.2m_money": {
+	"2m_money": {
 		"category": "player",
 		"sounds": [ "halva_kombat:2m_moneys" ]
 	},
-	"gui.coin_drop": {
+	"coin_drop": {
 		"category": "player",
 		"sounds": [ "halva_kombat:coin_drop" ]
 	},
-	"gui.buy": {
+	"buy": {
 		"category": "player",
 		"sounds": [ "halva_kombat:buy" ]
+	},
+	"phone_off": {
+		"category": "player",
+		"sounds": [ "halva_kombat:phone_off" ]
+	},
+	"phone_on": {
+		"category": "player",
+		"sounds": [ "halva_kombat:phone_on" ]
 	}
 }

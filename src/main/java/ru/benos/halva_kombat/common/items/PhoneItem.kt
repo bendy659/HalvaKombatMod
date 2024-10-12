@@ -1,6 +1,7 @@
 package ru.benos.halva_kombat.common.items
 
 import net.minecraft.client.Minecraft
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
@@ -8,8 +9,11 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.Level
+import ru.benos.halva_kombat.HalvaKombat.Companion.LOGGER
+import ru.benos.halva_kombat.HalvaKombat.Companion.debug
 import ru.benos.halva_kombat.client.guis.PhoneMenu
 import ru.benos.halva_kombat.common.registries.KOTLOUDRON_TAB
+import ru.benos.halva_kombat.common.registries.Registries.PHONE_ON
 
 class PhoneItem : Item(
   Properties()
@@ -20,10 +24,17 @@ class PhoneItem : Item(
 ) {
   override fun use(pLevel: Level, pPlayer: Player, pUsedHand: InteractionHand): InteractionResultHolder<ItemStack> {
     if(pLevel.isClientSide()) {
+      PhoneItemData.pPlayer = pPlayer
+      PhoneItemData.pLevel = pLevel
+      pLevel.playSound(pPlayer, pPlayer.blockPosition(), PHONE_ON.get(), SoundSource.PLAYERS, 1f, 1f)
+      if(debug) LOGGER.debug("Phone on")
       Minecraft.getInstance().setScreen(PhoneMenu)
-      PhoneMenu.pPlayer = pPlayer
     }
-
     return super.use(pLevel, pPlayer, pUsedHand)
   }
+}
+
+object PhoneItemData {
+  lateinit var pPlayer: Player
+  lateinit var pLevel: Level
 }

@@ -7,12 +7,13 @@ import imgui.flag.ImGuiWindowFlags
 import imgui.type.ImBoolean
 import imgui.type.ImFloat
 import imgui.type.ImInt
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.player.Player
 import ru.benos.halva_kombat.HalvaKombat.Companion.LOGGER
 import ru.benos.halva_kombat.HalvaKombat.Companion.MODID
 import ru.benos.halva_kombat.HalvaKombat.Companion.debug
-import ru.benos.halva_kombat.client.guis.PhoneMenu
 import ru.benos.halva_kombat.client.guis.Utils.phoneBg
+import ru.benos.halva_kombat.common.items.PhoneItemData
 import ru.benos.halva_kombat.common.registries.Registries.CLICK_COIN
 import ru.hollowhorizon.hc.client.utils.get
 import ru.hollowhorizon.hc.client.utils.rl
@@ -21,8 +22,9 @@ import ru.hollowhorizon.hc.common.capabilities.CapabilityInstance
 import ru.hollowhorizon.hc.common.capabilities.HollowCapabilityV2
 
 object GemtapMenuApp {
-  val pPlayer = PhoneMenu.pPlayer
-  val pData = pPlayer?.get(GemtapData::class) ?: error("Get player is null!")
+  private val pPlayer = PhoneItemData.pPlayer?: error("get player is null")
+  private val pLevel = PhoneItemData.pLevel?: error("get level is null")
+  private val pData = pPlayer[GemtapData::class]
 
   var balance = ImInt(pData.dataBalance)
   var nextLvlUp = ImInt(pData.dataNextLvlUp)
@@ -104,13 +106,14 @@ object GemtapMenuApp {
     ImGui.popStyleVar()
 
     if(clicker) {
-      pPlayer?.playSound(CLICK_COIN.get(), 0.5f, 1f)
+      pLevel.playSound(pPlayer, pPlayer.blockPosition(), CLICK_COIN.get(), SoundSource.PLAYERS, 0.5f, 1f)
       balance.set(balance.get() + clickAdd.get())
       if(balance.get() >= nextLvlUp.get()) {
         balance.set(0)
         nextLvlUp.set((nextLvlUp.get() * 1.65).toInt())
         upgradePoints.set(upgradeClickAdd.get() + 1)
       }
+      if(debug) LOGGER.debug("Clicked $balance count.")
     }
     ImGui.popID()
   }
