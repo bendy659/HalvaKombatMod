@@ -2,6 +2,7 @@ package ru.benos.halva_kombat.client.guis
 
 import com.mojang.blaze3d.vertex.PoseStack
 import imgui.ImGui
+import imgui.type.ImBoolean
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
@@ -11,7 +12,7 @@ import ru.hollowhorizon.hc.client.utils.rl
 import ru.hollowhorizon.hc.client.utils.toTexture
 
 object PreviewGui: Screen(Component.empty()) {
-
+  val isChecked = ImBoolean(false)
 
   override fun render(pPoseStack: PoseStack, pMouseX: Int, pMouseY: Int, pPartialTick: Float) {
     ImguiHandler.drawFrame {
@@ -27,6 +28,8 @@ object PreviewGui: Screen(Component.empty()) {
       ImGui.image("$assets/example-image.png".rl.toTexture().id, 256f, 256f)
 
       ImGui.button("Example button")
+
+      ImGui.checkbox("Example checkbox", isChecked)
 
       ImGui.end()
     }
