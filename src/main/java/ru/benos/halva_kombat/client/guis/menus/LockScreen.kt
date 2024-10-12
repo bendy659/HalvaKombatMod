@@ -1,4 +1,4 @@
-package ru.benos.halva_kombat.client.guis.halva_kombat.menus
+package ru.benos.halva_kombat.client.guis.menus
 
 import imgui.ImGui
 import imgui.flag.ImGuiCol

@@ -1,6 +1,7 @@
 package ru.benos.halva_kombat.client.guis
 
 import imgui.ImGui
+import imgui.flag.ImGuiWindowFlags
 import net.minecraft.server.level.ServerLevel
 import net.minecraftforge.server.ServerLifecycleHooks
 import ru.benos.halva_kombat.HalvaKombat.Companion.MODID
@@ -72,5 +73,23 @@ object Utils {
     val minutes = (tickTime % 1000) * 60 / 1000
 
     return hours to minutes
+  }
+
+  fun phoneBg(path: String = "bg.png", rgba: Array<Float> = arrayOf(1f, 1f, 1f, 1f)) {
+    val width = ImGui.getWindowWidth()
+    val height = ImGui.getWindowHeight()
+    val oldCursorPos = ImGui.getCursorPos()
+
+    ImGui.setCursorPos(32f, 64f)
+    ImGui.beginChild(
+      "menu-bg",
+      width - 64f, height - 128f,
+      false,
+      ImGuiWindowFlags.NoBackground or ImGuiWindowFlags.NoScrollbar or ImGuiWindowFlags.NoTitleBar or ImGuiWindowFlags.NoScrollWithMouse
+    )
+    ImGui.image("$MODID:textures/gui/$path".rl.toTexture().id, width - 64f, height - 128f, 0f, 0f, 1f, 1f, rgba[0], rgba[1], rgba[2], rgba[3])
+    ImGui.endChild()
+
+    ImGui.setCursorPos(oldCursorPos.x, oldCursorPos.y)
   }
 }

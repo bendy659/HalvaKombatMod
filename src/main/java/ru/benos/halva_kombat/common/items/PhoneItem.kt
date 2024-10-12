@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.Level
-import ru.benos.halva_kombat.client.guis.halva_kombat.PhoneMenu
+import ru.benos.halva_kombat.client.guis.PhoneMenu
 import ru.benos.halva_kombat.common.registries.KOTLOUDRON_TAB
 
 class PhoneItem : Item(
@@ -19,7 +19,10 @@ class PhoneItem : Item(
     .fireResistant()
 ) {
   override fun use(pLevel: Level, pPlayer: Player, pUsedHand: InteractionHand): InteractionResultHolder<ItemStack> {
-    if(pLevel.isClientSide()) Minecraft.getInstance().setScreen(PhoneMenu(pPlayer))
+    if(pLevel.isClientSide()) {
+      Minecraft.getInstance().setScreen(PhoneMenu)
+      PhoneMenu.pPlayer = pPlayer
+    }
 
     return super.use(pLevel, pPlayer, pUsedHand)
   }
