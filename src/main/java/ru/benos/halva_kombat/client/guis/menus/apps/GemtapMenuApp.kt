@@ -22,8 +22,8 @@ import ru.hollowhorizon.hc.common.capabilities.CapabilityInstance
 import ru.hollowhorizon.hc.common.capabilities.HollowCapabilityV2
 
 object GemtapMenuApp {
-  private val pPlayer = PhoneItemData.pPlayer?: error("get player is null")
-  private val pLevel = PhoneItemData.pLevel?: error("get level is null")
+  private val pPlayer = PhoneItemData.getPlayer()
+  private val pLevel = PhoneItemData.getLevel()
   private val pData = pPlayer[GemtapData::class]
 
   var balance = ImInt(pData.dataBalance)
@@ -113,9 +113,37 @@ object GemtapMenuApp {
         nextLvlUp.set((nextLvlUp.get() * 1.65).toInt())
         upgradePoints.set(upgradeClickAdd.get() + 1)
       }
-      if(debug) LOGGER.debug("Clicked $balance count.")
+      if (debug) LOGGER.debug("Clicked {} count.", balance)
     }
     ImGui.popID()
+  }
+
+  /* ---- */
+
+  fun readDatas() {
+    try {
+      balance.set(GemtapData().dataBalance)
+      nextLvlUp.set(GemtapData().dataNextLvlUp)
+      upgradePoints.set(GemtapData().dataUpgradePoints)
+      clickAdd.set(GemtapData().dataClickAdd)
+      upgradePoints.set(GemtapData().dataUpgradeClickAdd)
+    } catch (_: Exception) {
+      if (debug) LOGGER.error("Error read datas \"GemtapApp.data.latest\". Loaded default value!")
+
+      balance.set(GemtapDataDefault().dataBalance)
+      nextLvlUp.set(GemtapDataDefault().dataNextLvlUp)
+      upgradePoints.set(GemtapDataDefault().dataUpgradePoints)
+      clickAdd.set(GemtapDataDefault().dataClickAdd)
+      upgradePoints.set(GemtapDataDefault().dataUpgradeClickAdd)
+    }
+  }
+
+  fun saveDatas() {
+    GemtapData().dataBalance = this.balance.get()
+    GemtapData().dataNextLvlUp = this.nextLvlUp.get()
+    GemtapData().dataUpgradePoints = this.upgradePoints.get()
+    GemtapData().dataClickAdd = this.clickAdd.get()
+    GemtapData().dataUpgradeClickAdd = this.clickAdd.get()
   }
 }
 
@@ -126,4 +154,12 @@ class GemtapData: CapabilityInstance() {
   var dataUpgradePoints by syncable(0)
   var dataClickAdd by syncable(1)
   var dataUpgradeClickAdd by syncable(0)
+}
+
+class GemtapDataDefault {
+  val dataBalance = 0
+  val dataNextLvlUp = 2500
+  val dataUpgradePoints = 0
+  val dataClickAdd = 1
+  val dataUpgradeClickAdd = 0
 }

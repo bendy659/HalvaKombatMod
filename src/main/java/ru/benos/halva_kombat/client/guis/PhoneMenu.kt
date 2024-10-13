@@ -5,16 +5,14 @@ import imgui.ImGui
 import imgui.flag.ImGuiWindowFlags
 import net.minecraft.client.Minecraft
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.level.Level
 import org.lwjgl.glfw.GLFW
 import ru.benos.halva_kombat.HalvaKombat.Companion.LOGGER
 import ru.benos.halva_kombat.HalvaKombat.Companion.MODID
 import ru.benos.halva_kombat.HalvaKombat.Companion.debug
 import ru.benos.halva_kombat.client.guis.Utils.phoneBg
+import ru.benos.halva_kombat.client.guis.halva_kombat.menus.BankMenuApp.onBankMenu
 import ru.benos.halva_kombat.client.guis.menus.AppsMenu.appID
 import ru.benos.halva_kombat.client.guis.menus.AppsMenu.onAppsMenu
-import ru.benos.halva_kombat.client.guis.halva_kombat.menus.BankMenuApp.onBankMenu
 import ru.benos.halva_kombat.client.guis.menus.LockScreen.onLockScreen
 import ru.benos.halva_kombat.client.guis.menus.apps.GemtapMenuApp.isGameLoad
 import ru.benos.halva_kombat.client.guis.menus.apps.GemtapMenuApp.loadBar
@@ -81,8 +79,8 @@ object PhoneMenu: HollowScreen() {
 
   override fun keyPressed(pKeyCode: Int, pScanCode: Int, pModifiers: Int): Boolean {
     if (pKeyCode == GLFW.GLFW_KEY_ESCAPE) {
-      val pPlayer = PhoneItemData.pPlayer?: error("get player is null")
-      val pLevel = PhoneItemData.pLevel?: error("get level is null")
+      val pPlayer = PhoneItemData.getPlayer()
+      val pLevel = PhoneItemData.getLevel()
       pLevel.playSound(pPlayer, pPlayer.blockPosition(), PHONE_OFF.get(), SoundSource.PLAYERS, 1f, 1f)
       if(debug) LOGGER.debug("Phone off")
       menuSelected = Menus.LOCK_SCREEN

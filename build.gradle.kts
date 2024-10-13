@@ -1,7 +1,6 @@
 import net.minecraftforge.gradle.common.util.RunConfig
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import net.minecraftforge.gradle.userdev.UserDevExtension
-import org.gradle.api.file.FileCollection
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.spongepowered.asm.gradle.plugins.MixinExtension
 import java.time.ZonedDateTime
@@ -107,6 +106,7 @@ dependencies {
   implementation("thedarkcolour:kotlinforforge:3.12.0")
   implementation(fg.deobf("ru.hollowhorizon:hc:$minecraft_version-1.6.3"))
   implementation(fg.deobf("ru.hollowhorizon:kotlinscript:1.4"))
+  implementation(fg.deobf("fundge.notenoughcrashes:notenoughcrashes:5.0.0+1.19.2-forge"))
 }
 
 fun Jar.createManifest() = manifest {
@@ -142,7 +142,7 @@ val shadowJar = tasks.named<ShadowJar>("shadowJar") {
   archiveClassifier.set("")
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   /*configurations = listOf(shadow)*/
-  configurations = listOf(shadow) as List<FileCollection?>?
+  configurations = listOf(shadow)
 
   exclude(
       "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**",

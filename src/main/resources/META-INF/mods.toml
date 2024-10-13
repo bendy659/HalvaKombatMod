@@ -8,8 +8,8 @@ credits="Small boobs :("
 [[mods]]
     modId = "halva_kombat"
     version = "${file.jarVersion}"
-    displayName = "Kotloudron"
-    description = "This special addon for mod 'HollowEngine'."
+    displayName = "HalvaKombatr"
+    description = "New smarthphone for tapping!"
 
 [[dependencies.halva_kombat]]
     modId = "forge"

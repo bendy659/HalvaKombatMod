@@ -8,7 +8,6 @@ object DesingLogging {
     val separator1 = List(desc.length) {"-"}.joinToString("-", "")
 
     return """
-    
     /$separator0
     |>---[${MODID.uppercase()}]
     |$separator1
