@@ -9,12 +9,12 @@ object PlayerEvents {
   @SubscribeEvent
   fun onPlayerLoggenIn(e: PlayerEvent.PlayerLoggedInEvent) {
     LOGGER.debug("Player {} Logged in. Reading datas from \"GemtapApp.data.latest\"...", e.entity)
-    GemtapMenuApp.readDatas()
+    //GemtapMenuApp.readData()
   }
 
   @SubscribeEvent
   fun onPlayerLoggenOut(e: PlayerEvent.PlayerLoggedOutEvent) {
     LOGGER.debug("Player {} Logged out. Save datas to \"GemtapApp.data.latest\"...", e.entity)
-    GemtapMenuApp.saveDatas()
+    //GemtapMenuApp.saveData()
   }
 }

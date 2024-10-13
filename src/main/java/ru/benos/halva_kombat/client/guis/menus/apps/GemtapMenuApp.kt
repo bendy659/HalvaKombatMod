@@ -120,7 +120,7 @@ object GemtapMenuApp {
 
   /* ---- */
 
-  fun readDatas() {
+  fun readData() {
     try {
       balance.set(GemtapData().dataBalance)
       nextLvlUp.set(GemtapData().dataNextLvlUp)
@@ -128,7 +128,7 @@ object GemtapMenuApp {
       clickAdd.set(GemtapData().dataClickAdd)
       upgradePoints.set(GemtapData().dataUpgradeClickAdd)
     } catch (_: Exception) {
-      if (debug) LOGGER.error("Error read datas \"GemtapApp.data.latest\". Loaded default value!")
+      if (debug) LOGGER.error("Error read data's \"GemtapApp.data.latest\". Loaded default value!")
 
       balance.set(GemtapDataDefault().dataBalance)
       nextLvlUp.set(GemtapDataDefault().dataNextLvlUp)
@@ -138,7 +138,7 @@ object GemtapMenuApp {
     }
   }
 
-  fun saveDatas() {
+  fun saveData() {
     GemtapData().dataBalance = this.balance.get()
     GemtapData().dataNextLvlUp = this.nextLvlUp.get()
     GemtapData().dataUpgradePoints = this.upgradePoints.get()
