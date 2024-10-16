@@ -79,8 +79,8 @@ object PhoneMenu: HollowScreen() {
 
   override fun keyPressed(pKeyCode: Int, pScanCode: Int, pModifiers: Int): Boolean {
     if (pKeyCode == GLFW.GLFW_KEY_ESCAPE) {
-      val pPlayer = PhoneItemData.getPlayer()
-      val pLevel = PhoneItemData.getLevel()
+      val pPlayer = PhoneItemData.pPlayer!!
+      val pLevel = PhoneItemData.pLevel!!
       pLevel.playSound(pPlayer, pPlayer.blockPosition(), PHONE_OFF.get(), SoundSource.PLAYERS, 1f, 1f)
       if(debug) LOGGER.debug("Phone off")
       menuSelected = Menus.LOCK_SCREEN

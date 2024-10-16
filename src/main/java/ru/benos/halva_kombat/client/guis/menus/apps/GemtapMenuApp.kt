@@ -22,9 +22,9 @@ import ru.hollowhorizon.hc.common.capabilities.CapabilityInstance
 import ru.hollowhorizon.hc.common.capabilities.HollowCapabilityV2
 
 object GemtapMenuApp {
-  private val pPlayer = PhoneItemData.getPlayer()
-  private val pLevel = PhoneItemData.getLevel()
-  private val pData = pPlayer[GemtapData::class]
+  private val pPlayer = PhoneItemData.pPlayer!!
+  private val pLevel = PhoneItemData.pLevel!!
+  private val pData = pPlayer.get(GemtapData::class)
 
   var balance = ImInt(pData.dataBalance)
   var nextLvlUp = ImInt(pData.dataNextLvlUp)

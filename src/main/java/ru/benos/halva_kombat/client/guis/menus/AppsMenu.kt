@@ -11,8 +11,8 @@ import ru.hollowhorizon.hc.client.utils.rl
 import ru.hollowhorizon.hc.client.utils.toTexture
 
 object AppsMenu {
-  val pPlayer = PhoneItemData.getPlayer()
-  val pLevel = PhoneItemData.getLevel()
+  private val pPlayer = PhoneItemData.pPlayer!!
+  private val pLevel = PhoneItemData.pLevel!!
 
   var appID = ImInt(0)
 

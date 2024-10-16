@@ -26,7 +26,7 @@ class PhoneItem : Item(
     if(pLevel.isClientSide()) {
       pLevel.playSound(pPlayer, pPlayer.blockPosition(), PHONE_ON.get(), SoundSource.PLAYERS, 1f, 1f)
       if(debug) LOGGER.debug("Phone on")
-      PhoneItemData.setPlayerAndLevel(pPlayer, pLevel)
+      PhoneItemData.pPlayer = pPlayer; PhoneItemData.pLevel = pLevel
       Minecraft.getInstance().setScreen(PhoneMenu)
     }
     return super.use(pLevel, pPlayer, pUsedHand)
@@ -34,14 +34,10 @@ class PhoneItem : Item(
 }
 
 object PhoneItemData {
-  lateinit var pPlayer: Player
-  lateinit var pLevel: Level
-
-  fun setPlayerAndLevel(pPlayer: Player, pLevel: Level) {
-    this.pPlayer = pPlayer
-    this.pLevel = pLevel
-  }
-
-  fun getPlayer(): Player = pPlayer
-  fun getLevel(): Level = pLevel
+  var pPlayer: Player? = null
+    get() = field
+    set(value) { field = value }
+  var pLevel: Level? = null
+    get() = field
+    set(value) { field = value }
 }
